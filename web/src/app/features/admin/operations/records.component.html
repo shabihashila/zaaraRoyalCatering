@@ -1,0 +1,318 @@
+<div class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">A THOUGHTFUL CUSTOMER EXPERIENCE</span>
+    <h1>{{ title }}</h1>
+    <p class="muted">{{ description }}</p>
+  </div>
+  @if (mode === 'reviews' || (mode === 'content' && auth.hasPermission('content.edit'))) {
+    <button class="primary" (click)="openNew()">
+      {{ mode === 'reviews' ? 'Add review' : 'Add content' }}
+    </button>
+  }
+</div>
+@if (error()) {
+  <div class="admin-alert error" role="alert">{{ error() }}</div>
+}
+@if (success()) {
+  <div class="admin-alert" role="status">{{ success() }}</div>
+}
+<section class="admin-panel">
+  <div class="admin-toolbar">
+    @if (mode === 'content') {
+      <select aria-label="Content type" [(ngModel)]="kind" (change)="filter()">
+        <option value="">All content</option>
+        @for (k of kinds; track k) {
+          <option [value]="k">{{ k }}</option>
+        }
+      </select>
+    }
+    @if (mode === 'requests') {
+      <select aria-label="Message type" [(ngModel)]="kind" (change)="filter()">
+        <option value="">All messages</option>
+        <option>Inquiry</option>
+        <option>Contact</option>
+        <option>Newsletter</option>
+      </select>
+    }
+    @if (mode !== 'content') {
+      <select aria-label="Record status" [(ngModel)]="status" (change)="filter()">
+        <option value="">All statuses</option>
+        @for (
+          s of mode === 'reviews'
+            ? ['Pending', 'Approved', 'Rejected']
+            : ['New', 'InProgress', 'Closed'];
+          track s
+        ) {
+          <option [value]="s">{{ s }}</option>
+        }
+      </select>
+    }
+    <button class="secondary" (click)="reload()" [disabled]="loading()">Refresh</button
+    ><span>{{ total() }} records</span>
+  </div>
+  @if (mode === 'reviews') {
+    <div class="ops-review-grid">
+      @for (r of reviews(); track r.id) {
+        <article class="ops-review-card">
+          <div class="panel-heading">
+            <b>{{ r.authorName }}</b
+            ><span class="admin-status" [class.neutral]="r.status !== 'Approved'">{{
+              r.status
+            }}</span>
+          </div>
+          <span class="ops-stars" [attr.aria-label]="r.rating + ' out of 5 stars'"
+            >{{ '★'.repeat(r.rating) }}{{ '☆'.repeat(5 - r.rating) }}</span
+          >
+          <p>{{ r.body }}</p>
+          <small
+            >{{ r.eventType ?? 'Customer feedback' }} ·
+            {{ r.createdAt | date: 'dd MMM yyyy' }}</small
+          >
+          @if (r.isFeatured) {
+            <span class="admin-status">Featured</span>
+          }
+          <button class="secondary" (click)="openReview(r)">Moderate review</button>
+        </article>
+      } @empty {
+        <p>
+          {{
+            loading()
+              ? 'Loading reviews…'
+              : 'No reviews yet. Submitted feedback will appear here for moderation.'
+          }}
+        </p>
+      }
+    </div>
+  }
+  @if (mode === 'requests') {
+    <div class="admin-table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Received</th>
+            <th>Customer</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of requests(); track r.id) {
+            <tr>
+              <td>
+                {{ r.createdAt | date: 'dd MMM yyyy' }}<small class="ops-block">{{ r.kind }}</small>
+              </td>
+              <td>
+                <b>{{ r.name }}</b
+                ><small class="ops-block">{{ r.email }} {{ r.phone }}</small>
+              </td>
+              <td>
+                <b>{{ r.subject }}</b>
+                <p class="ops-message">{{ r.message }}</p>
+                @if (r.staffNotes) {
+                  <small>Staff: {{ r.staffNotes }}</small>
+                }
+              </td>
+              <td>
+                <span class="admin-status">{{ r.status }}</span>
+              </td>
+              <td>
+                @if (auth.hasPermission('engagement.inquiry.manage')) {
+                  <button class="secondary" (click)="openRequest(r)">Handle request</button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">
+                {{ loading() ? 'Loading messages…' : 'No customer messages match this filter.' }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (mode === 'content') {
+    <div class="admin-table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Type / key</th>
+            <th>Title</th>
+            <th>Copy / value</th>
+            <th>Publication</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (e of entries(); track e.id) {
+            <tr>
+              <td>
+                {{ e.kind }}<small class="ops-block">{{ e.key }}</small>
+              </td>
+              <td>
+                <b>{{ e.title }}</b>
+              </td>
+              <td>
+                <p class="ops-message">{{ e.body }}</p>
+              </td>
+              <td>
+                <span class="admin-status" [class.neutral]="!e.isPublished">{{
+                  e.isPublished ? 'Published' : 'Draft'
+                }}</span>
+              </td>
+              <td>
+                @if (auth.hasPermission('content.edit')) {
+                  <button class="secondary" (click)="openContent(e)">Edit</button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">
+                {{
+                  loading()
+                    ? 'Loading content…'
+                    : 'No managed content yet. The public site uses its existing defaults.'
+                }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  <div class="admin-toolbar">
+    <span>Page {{ page() }} of {{ pages() }}</span
+    ><button (click)="changePage(-1)" [disabled]="page() === 1 || loading()">Previous</button
+    ><button (click)="changePage(1)" [disabled]="page() >= pages() || loading()">Next</button>
+  </div>
+</section>
+@if (editor()) {
+  <zrc-admin-modal
+    [label]="title"
+    [busy]="saving()"
+    [error]="error()"
+    (dismiss)="editor.set(false)"
+  >
+    <h2>
+      {{
+        mode === 'reviews'
+          ? review()
+            ? 'Moderate review'
+            : 'Add feedback'
+          : mode === 'requests'
+            ? 'Handle customer request'
+            : entry()
+              ? 'Edit content'
+              : 'New content'
+      }}
+    </h2>
+    @if (mode === 'reviews' && !review()) {
+      <form [formGroup]="reviewForm" (ngSubmit)="save()">
+        <div class="ops-form-grid">
+          <label>Author name<input formControlName="authorName" maxlength="160" /></label
+          ><label
+            >Rating<select formControlName="rating">
+              <option [ngValue]="5">5 stars</option>
+              <option [ngValue]="4">4 stars</option>
+              <option [ngValue]="3">3 stars</option>
+              <option [ngValue]="2">2 stars</option>
+              <option [ngValue]="1">1 star</option>
+            </select></label
+          ><label>Event type<input formControlName="eventType" maxlength="160" /></label
+          ><label
+            >Customer feedback<textarea formControlName="body" maxlength="2000"></textarea>
+          </label>
+        </div>
+        <p class="muted">
+          Add feedback only with the customer's permission. New reviews await moderation.
+        </p>
+        <button class="primary" [disabled]="reviewForm.invalid || saving()">
+          Submit for moderation
+        </button>
+      </form>
+    }
+    @if (mode === 'reviews' && review(); as r) {
+      <p>{{ r.authorName }}: {{ r.body }}</p>
+      <form [formGroup]="moderateForm" (ngSubmit)="save()">
+        <div class="ops-form-grid">
+          <label
+            >Status<select formControlName="status">
+              <option>Pending</option>
+              <option>Approved</option>
+              <option>Rejected</option>
+            </select></label
+          ><label class="ops-check"
+            ><input type="checkbox" formControlName="isFeatured" />Feature on the public
+            website</label
+          >
+        </div>
+        <button class="primary" [disabled]="saving()">Save moderation</button>
+      </form>
+    }
+    @if (mode === 'requests' && request(); as r) {
+      <p>{{ r.name }} · {{ r.subject }}</p>
+      <p>{{ r.message }}</p>
+      <form [formGroup]="handleForm" (ngSubmit)="save()">
+        <div class="ops-form-grid">
+          <label
+            >Status<select formControlName="status">
+              <option>New</option>
+              <option>InProgress</option>
+              <option>Closed</option>
+            </select></label
+          ><label
+            >Internal follow-up notes<textarea
+              formControlName="staffNotes"
+              maxlength="2000"
+            ></textarea>
+          </label>
+        </div>
+        <button class="primary" [disabled]="handleForm.invalid || saving()">Save follow-up</button>
+      </form>
+    }
+    @if (mode === 'content') {
+      <form [formGroup]="contentForm" (ngSubmit)="save()">
+        <div class="ops-form-grid">
+          <label
+            >Type<select formControlName="kind">
+              @for (k of kinds; track k) {
+                <option [value]="k">{{ k }}</option>
+              }
+            </select></label
+          ><label
+            >Unique key<input
+              formControlName="key"
+              maxlength="100"
+              placeholder="e.g. home, about, delivery, phone"
+            /><small>Lowercase letters, numbers, dots and hyphens.</small></label
+          ><label>Title / question<input formControlName="title" maxlength="200" /></label
+          ><label
+            >Copy / answer / setting value<textarea
+              formControlName="body"
+              maxlength="4000"
+            ></textarea></label
+          ><label
+            >Image URL (optional)<input
+              formControlName="imageUrl"
+              maxlength="1000"
+              placeholder="/assets/food/feast.webp or https://…" /></label
+          ><label>Sort order<input type="number" formControlName="sortOrder" min="0" /></label
+          ><label class="ops-check"
+            ><input type="checkbox" formControlName="isPublished" />Publish</label
+          >
+        </div>
+        <p class="muted small">
+          Home hero: Hero/home. About page: Page/about. Settings: phone, whatsapp, email, address.
+          Published FAQ and gallery entries extend the public pages.
+        </p>
+        <button class="primary" [disabled]="contentForm.invalid || saving()">
+          {{ saving() ? 'Saving…' : 'Save content' }}
+        </button>
+      </form>
+    }
+    <button class="secondary" (click)="editor.set(false)" [disabled]="saving()">Cancel</button>
+  </zrc-admin-modal>
+}

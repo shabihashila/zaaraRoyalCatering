@@ -1,0 +1,128 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "route": "/",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "A feast to remember.A moment to cherish."
+    },
+    {
+      "width": 1440,
+      "route": "/menu?category=lunch",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Packages for every occasion"
+    },
+    {
+      "width": 1440,
+      "route": "/packages/lunch-royal-kacchi",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Royal Kacchi"
+    },
+    {
+      "width": 1440,
+      "route": "/gallery",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "A taste of the celebration"
+    },
+    {
+      "width": 1440,
+      "route": "/contact",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Talk to us"
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Good food. Generous hospitality."
+    },
+    {
+      "width": 1440,
+      "route": "/inquiry",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Custom event inquiry"
+    },
+    {
+      "width": 1440,
+      "route": "/faqs",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Questions, answered"
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "A feast to remember.A moment to cherish."
+    },
+    {
+      "width": 390,
+      "route": "/menu?category=lunch",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Packages for every occasion"
+    },
+    {
+      "width": 390,
+      "route": "/packages/lunch-royal-kacchi",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Royal Kacchi"
+    },
+    {
+      "width": 390,
+      "route": "/gallery",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "A taste of the celebration"
+    },
+    {
+      "width": 390,
+      "route": "/contact",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Talk to us"
+    },
+    {
+      "width": 390,
+      "route": "/about",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Good food. Generous hospitality."
+    },
+    {
+      "width": 390,
+      "route": "/inquiry",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Custom event inquiry"
+    },
+    {
+      "width": 390,
+      "route": "/faqs",
+      "overflow": false,
+      "brokenImages": [],
+      "h1": "Questions, answered"
+    }
+  ],
+  "errors": [],
+  "interactions": {
+    "mobileMenu": true,
+    "mobileMenuCloses": true,
+    "category": "lunch",
+    "lunchCards": 3,
+    "flipInert": true,
+    "quote": "৳34,800",
+    "galleryFocused": true,
+    "galleryTrap": true,
+    "galleryReturnsFocus": true
+  }
+}

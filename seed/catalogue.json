@@ -1,0 +1,945 @@
+{
+  "generatedAt": "2026-09-30T20:25:02.2156371+00:00",
+  "source": "docs/zaara_royal_catering_menu.xlsx",
+  "packageCount": 19,
+  "itemRowCount": 145,
+  "distinctItemCount": 81,
+  "averages": {
+    "sale": 319.47,
+    "cost": 186.84,
+    "profit": 132.63
+  },
+  "categories": [
+    {
+      "name": "Breakfast",
+      "slug": "breakfast",
+      "sortOrder": 10
+    },
+    {
+      "name": "Lunch",
+      "slug": "lunch",
+      "sortOrder": 20
+    },
+    {
+      "name": "Dinner",
+      "slug": "dinner",
+      "sortOrder": 30
+    },
+    {
+      "name": "Milad \u0026 Doa Mahfil",
+      "slug": "milad-doa-mahfil",
+      "sortOrder": 40
+    },
+    {
+      "name": "Corporate Program",
+      "slug": "corporate-program",
+      "sortOrder": 50
+    },
+    {
+      "name": "House Party",
+      "slug": "house-party",
+      "sortOrder": 60
+    }
+  ],
+  "packages": [
+    {
+      "category": "Breakfast",
+      "name": "Classic Breakfast",
+      "slug": "breakfast-classic-breakfast",
+      "salePricePerHead": 120,
+      "totalCost": 70,
+      "profit": 50,
+      "marginPct": 0.4166666666666666666666666667,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Paratha (2 pcs)",
+          "costPerHead": 20
+        },
+        {
+          "item": "Vegetable Bhaji",
+          "costPerHead": 10
+        },
+        {
+          "item": "Scrambled Egg",
+          "costPerHead": 10
+        },
+        {
+          "item": "Chola Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Sweet",
+          "costPerHead": 10
+        },
+        {
+          "item": "Black Tea",
+          "costPerHead": 10
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Breakfast",
+      "name": "Premium Breakfast",
+      "slug": "breakfast-premium-breakfast",
+      "salePricePerHead": 180,
+      "totalCost": 105,
+      "profit": 75,
+      "marginPct": 0.4166666666666666666666666667,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Luchi or Paratha",
+          "costPerHead": 25
+        },
+        {
+          "item": "Aloo Dum",
+          "costPerHead": 15
+        },
+        {
+          "item": "Egg Curry",
+          "costPerHead": 15
+        },
+        {
+          "item": "Boot Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Semolina Halwa",
+          "costPerHead": 15
+        },
+        {
+          "item": "Seasonal Fruit",
+          "costPerHead": 10
+        },
+        {
+          "item": "Doi-Chira (Yogurt \u0026 Flattened Rice)",
+          "costPerHead": 10
+        },
+        {
+          "item": "Tea / Coffee",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Breakfast",
+      "name": "Royal Breakfast",
+      "slug": "breakfast-royal-breakfast",
+      "salePricePerHead": 250,
+      "totalCost": 145,
+      "profit": 105,
+      "marginPct": 0.42,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Bhuna Khichuri",
+          "costPerHead": 30
+        },
+        {
+          "item": "Beef Bhuna",
+          "costPerHead": 50
+        },
+        {
+          "item": "Egg Curry",
+          "costPerHead": 15
+        },
+        {
+          "item": "Fried Eggplant",
+          "costPerHead": 10
+        },
+        {
+          "item": "Borhani",
+          "costPerHead": 15
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Jilapi / Sweet",
+          "costPerHead": 15
+        },
+        {
+          "item": "Tea / Coffee",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Lunch",
+      "name": "Standard",
+      "slug": "lunch-standard",
+      "salePricePerHead": 250,
+      "totalCost": 145,
+      "profit": 105,
+      "marginPct": 0.42,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "White Rice",
+          "costPerHead": 20
+        },
+        {
+          "item": "Chicken Curry",
+          "costPerHead": 75
+        },
+        {
+          "item": "Masoor Dal",
+          "costPerHead": 15
+        },
+        {
+          "item": "Mixed Vegetables",
+          "costPerHead": 15
+        },
+        {
+          "item": "Aloo Bhorta (Mashed Potato)",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Pickle",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Lunch",
+      "name": "Premium",
+      "slug": "lunch-premium",
+      "salePricePerHead": 350,
+      "totalCost": 205,
+      "profit": 145,
+      "marginPct": 0.4142857142857142857142857143,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Rice / Polao",
+          "costPerHead": 25
+        },
+        {
+          "item": "Chicken Roast",
+          "costPerHead": 50
+        },
+        {
+          "item": "Beef Bhuna",
+          "costPerHead": 60
+        },
+        {
+          "item": "Fried Rui Fish",
+          "costPerHead": 35
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Sweet Yogurt",
+          "costPerHead": 5
+        },
+        {
+          "item": "Paan-Supari",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Lunch",
+      "name": "Royal Kacchi",
+      "slug": "lunch-royal-kacchi",
+      "salePricePerHead": 500,
+      "totalCost": 300,
+      "profit": 200,
+      "marginPct": 0.4,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": "Mutton Kacchi carries an extra \u09F380/head",
+      "items": [
+        {
+          "item": "Kacchi Biryani (Mutton/Chicken)",
+          "costPerHead": 205
+        },
+        {
+          "item": "Borhani",
+          "costPerHead": 25
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 10
+        },
+        {
+          "item": "Egg",
+          "costPerHead": 15
+        },
+        {
+          "item": "Fried Eggplant",
+          "costPerHead": 10
+        },
+        {
+          "item": "Shahi Zarda",
+          "costPerHead": 20
+        },
+        {
+          "item": "Sweet",
+          "costPerHead": 10
+        },
+        {
+          "item": "Paan-Supari",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": [
+        {
+          "name": "Chicken",
+          "priceDeltaPerHead": 0,
+          "isDefault": true
+        },
+        {
+          "name": "Mutton",
+          "priceDeltaPerHead": 80,
+          "isDefault": false
+        }
+      ]
+    },
+    {
+      "category": "Dinner",
+      "name": "Standard",
+      "slug": "dinner-standard",
+      "salePricePerHead": 280,
+      "totalCost": 165,
+      "profit": 115,
+      "marginPct": 0.4107142857142857142857142857,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Polao",
+          "costPerHead": 25
+        },
+        {
+          "item": "Chicken Rezala",
+          "costPerHead": 90
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 15
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 15
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Pickle",
+          "costPerHead": 5
+        },
+        {
+          "item": "Sweet",
+          "costPerHead": 10
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Dinner",
+      "name": "Premium",
+      "slug": "dinner-premium",
+      "salePricePerHead": 400,
+      "totalCost": 235,
+      "profit": 165,
+      "marginPct": 0.4125,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Polao",
+          "costPerHead": 30
+        },
+        {
+          "item": "Chicken Roast",
+          "costPerHead": 55
+        },
+        {
+          "item": "Beef Rezala",
+          "costPerHead": 70
+        },
+        {
+          "item": "Hilsa / Rui Fish",
+          "costPerHead": 35
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Borhani",
+          "costPerHead": 15
+        },
+        {
+          "item": "Firni",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Dinner",
+      "name": "Royal Dinner",
+      "slug": "dinner-royal-dinner",
+      "salePricePerHead": 550,
+      "totalCost": 320,
+      "profit": 230,
+      "marginPct": 0.4181818181818181818181818182,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Morog Polao / Kacchi",
+          "costPerHead": 75
+        },
+        {
+          "item": "Beef Kala Bhuna",
+          "costPerHead": 75
+        },
+        {
+          "item": "Mutton Rezala",
+          "costPerHead": 85
+        },
+        {
+          "item": "Fried Fish",
+          "costPerHead": 35
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Borhani",
+          "costPerHead": 15
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Shahi Tukra",
+          "costPerHead": 15
+        },
+        {
+          "item": "Fruit Platter",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Milad \u0026 Doa Mahfil",
+      "name": "Tabarak Package",
+      "slug": "milad-doa-mahfil-tabarak-package",
+      "salePricePerHead": 150,
+      "totalCost": 85,
+      "profit": 65,
+      "marginPct": 0.4333333333333333333333333333,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Sweet Polao / Zarda",
+          "costPerHead": 25
+        },
+        {
+          "item": "Beef",
+          "costPerHead": 45
+        },
+        {
+          "item": "Chickpeas",
+          "costPerHead": 5
+        },
+        {
+          "item": "Dates",
+          "costPerHead": 5
+        },
+        {
+          "item": "Water",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Milad \u0026 Doa Mahfil",
+      "name": "Standard Doa Mahfil",
+      "slug": "milad-doa-mahfil-standard-doa-mahfil",
+      "salePricePerHead": 220,
+      "totalCost": 130,
+      "profit": 90,
+      "marginPct": 0.4090909090909090909090909091,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Rice / Polao",
+          "costPerHead": 20
+        },
+        {
+          "item": "Chicken Curry",
+          "costPerHead": 70
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Pickle",
+          "costPerHead": 5
+        },
+        {
+          "item": "Sweet",
+          "costPerHead": 5
+        },
+        {
+          "item": "Water",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Milad \u0026 Doa Mahfil",
+      "name": "Full Meal Package",
+      "slug": "milad-doa-mahfil-full-meal-package",
+      "salePricePerHead": 320,
+      "totalCost": 190,
+      "profit": 130,
+      "marginPct": 0.40625,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": "Includes packaging \u0026 distribution support",
+      "items": [
+        {
+          "item": "Polao",
+          "costPerHead": 25
+        },
+        {
+          "item": "Chicken Roast",
+          "costPerHead": 55
+        },
+        {
+          "item": "Beef Bhuna",
+          "costPerHead": 60
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Egg",
+          "costPerHead": 10
+        },
+        {
+          "item": "Zarda",
+          "costPerHead": 5
+        },
+        {
+          "item": "Sweet",
+          "costPerHead": 5
+        },
+        {
+          "item": "Water",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [
+        "Includes packaging \u0026 distribution support"
+      ],
+      "variants": []
+    },
+    {
+      "category": "Corporate Program",
+      "name": "Snacks / Tea Break Package",
+      "slug": "corporate-program-snacks-tea-break-package",
+      "salePricePerHead": 80,
+      "totalCost": 45,
+      "profit": 35,
+      "marginPct": 0.4375,
+      "minGuests": 1,
+      "tagline": "Ideal for morning or afternoon meeting breaks",
+      "workbookNote": "Ideal for morning or afternoon meeting breaks",
+      "items": [
+        {
+          "item": "Samosa",
+          "costPerHead": 10
+        },
+        {
+          "item": "Singara",
+          "costPerHead": 10
+        },
+        {
+          "item": "Chicken Pakora",
+          "costPerHead": 15
+        },
+        {
+          "item": "Biscuits",
+          "costPerHead": 5
+        },
+        {
+          "item": "Tea / Coffee",
+          "costPerHead": 3
+        },
+        {
+          "item": "Water",
+          "costPerHead": 2
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Corporate Program",
+      "name": "Box Lunch",
+      "slug": "corporate-program-box-lunch",
+      "salePricePerHead": 220,
+      "totalCost": 130,
+      "profit": 90,
+      "marginPct": 0.4090909090909090909090909091,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Polao / Rice",
+          "costPerHead": 20
+        },
+        {
+          "item": "Chicken Curry",
+          "costPerHead": 80
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Mineral Water",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Corporate Program",
+      "name": "Standard Buffet",
+      "slug": "corporate-program-standard-buffet",
+      "salePricePerHead": 380,
+      "totalCost": 220,
+      "profit": 160,
+      "marginPct": 0.4210526315789473684210526316,
+      "minGuests": 40,
+      "tagline": null,
+      "workbookNote": "Minimum 40 guests",
+      "items": [
+        {
+          "item": "Rice \u0026 Polao",
+          "costPerHead": 25
+        },
+        {
+          "item": "2 Chicken \u0026 Beef Dishes",
+          "costPerHead": 110
+        },
+        {
+          "item": "Fish",
+          "costPerHead": 30
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad Bar",
+          "costPerHead": 10
+        },
+        {
+          "item": "Dessert",
+          "costPerHead": 15
+        },
+        {
+          "item": "Soft Drink",
+          "costPerHead": 10
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "Corporate Program",
+      "name": "Executive Buffet",
+      "slug": "corporate-program-executive-buffet",
+      "salePricePerHead": 550,
+      "totalCost": 320,
+      "profit": 230,
+      "marginPct": 0.4181818181818181818181818182,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": "Includes waiter service \u0026 cutlery",
+      "items": [
+        {
+          "item": "Kacchi / Biryani",
+          "costPerHead": 90
+        },
+        {
+          "item": "Roast",
+          "costPerHead": 70
+        },
+        {
+          "item": "Kebab Station",
+          "costPerHead": 60
+        },
+        {
+          "item": "Fish",
+          "costPerHead": 35
+        },
+        {
+          "item": "Salad Bar",
+          "costPerHead": 15
+        },
+        {
+          "item": "Soup",
+          "costPerHead": 15
+        },
+        {
+          "item": "Dessert",
+          "costPerHead": 15
+        },
+        {
+          "item": "Beverages",
+          "costPerHead": 15
+        },
+        {
+          "item": "Tea/Coffee Corner",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [
+        "Includes waiter service \u0026 cutlery"
+      ],
+      "variants": []
+    },
+    {
+      "category": "House Party",
+      "name": "Snacks Party",
+      "slug": "house-party-snacks-party",
+      "salePricePerHead": 200,
+      "totalCost": 115,
+      "profit": 85,
+      "marginPct": 0.425,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Chicken Fry",
+          "costPerHead": 35
+        },
+        {
+          "item": "Shawarma / Roll",
+          "costPerHead": 30
+        },
+        {
+          "item": "Fuchka / Chotpoti",
+          "costPerHead": 15
+        },
+        {
+          "item": "French Fries",
+          "costPerHead": 15
+        },
+        {
+          "item": "Spring Roll",
+          "costPerHead": 15
+        },
+        {
+          "item": "Soft Drink",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "House Party",
+      "name": "Full Dinner Party",
+      "slug": "house-party-full-dinner-party",
+      "salePricePerHead": 420,
+      "totalCost": 245,
+      "profit": 175,
+      "marginPct": 0.4166666666666666666666666667,
+      "minGuests": 1,
+      "tagline": null,
+      "workbookNote": null,
+      "items": [
+        {
+          "item": "Polao",
+          "costPerHead": 30
+        },
+        {
+          "item": "Chicken Roast",
+          "costPerHead": 60
+        },
+        {
+          "item": "Beef Bhuna",
+          "costPerHead": 75
+        },
+        {
+          "item": "Fish Fry",
+          "costPerHead": 40
+        },
+        {
+          "item": "Dal",
+          "costPerHead": 10
+        },
+        {
+          "item": "Vegetables",
+          "costPerHead": 10
+        },
+        {
+          "item": "Salad",
+          "costPerHead": 5
+        },
+        {
+          "item": "Borhani",
+          "costPerHead": 10
+        },
+        {
+          "item": "Dessert",
+          "costPerHead": 5
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    },
+    {
+      "category": "House Party",
+      "name": "BBQ Night",
+      "slug": "house-party-bbq-night",
+      "salePricePerHead": 650,
+      "totalCost": 380,
+      "profit": 270,
+      "marginPct": 0.4153846153846153846153846154,
+      "minGuests": 1,
+      "tagline": "Outdoor setup \u0026 live chef service available (extra charges apply)",
+      "workbookNote": "Outdoor setup \u0026 live chef service available (extra charges apply)",
+      "items": [
+        {
+          "item": "Chicken / Beef BBQ",
+          "costPerHead": 180
+        },
+        {
+          "item": "Grilled Kebab",
+          "costPerHead": 110
+        },
+        {
+          "item": "Naan",
+          "costPerHead": 25
+        },
+        {
+          "item": "Salad Bar",
+          "costPerHead": 20
+        },
+        {
+          "item": "Dip Sauce",
+          "costPerHead": 10
+        },
+        {
+          "item": "Soft Drink",
+          "costPerHead": 25
+        },
+        {
+          "item": "Dessert",
+          "costPerHead": 10
+        }
+      ],
+      "inclusions": [],
+      "variants": []
+    }
+  ]
+}

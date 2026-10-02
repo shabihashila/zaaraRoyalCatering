@@ -1,0 +1,112 @@
+<div class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">YOUR MENU COLLECTION</span>
+    <h1>Package management</h1>
+    <p class="muted">Review your signature spreads, pricing and availability.</p>
+  </div>
+  <div class="form-actions">
+    <button class="secondary" (click)="reload()" [disabled]="loading()">Refresh</button>
+    @if (auth.hasPermission('catalog.costing.view')) {
+      <button class="primary" (click)="export()" [disabled]="loading()">Export catalog</button>
+    }
+  </div>
+</div>
+@if (error()) {
+  <div class="admin-alert error" role="alert">{{ error() }}</div>
+}
+<section class="admin-panel">
+  <div class="admin-toolbar">
+    <label class="admin-search-field"
+      ><input
+        type="search"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        aria-label="Filter packages"
+        placeholder="Find a package or occasion…" /></label
+    ><select
+      [ngModel]="category()"
+      (ngModelChange)="category.set($event)"
+      aria-label="Filter category"
+      style="width: auto; max-width: 100%"
+    >
+      <option value="">All occasions</option>
+      @for (c of categories(); track c) {
+        <option [value]="c">{{ c }}</option>
+      }</select
+    ><select
+      [ngModel]="status()"
+      (ngModelChange)="status.set($event)"
+      aria-label="Filter availability"
+      style="width: auto"
+    >
+      <option value="all">All statuses</option>
+      <option value="active">Active</option>
+      <option value="hidden">Hidden</option></select
+    ><span class="muted small">{{ filtered().length }} packages</span>
+  </div>
+  <div class="admin-table-scroll">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Package</th>
+          <th>Occasion</th>
+          <th>Price / head</th>
+          @if (auth.hasPermission('catalog.costing.view')) {
+            <th>Cost / head</th>
+            <th>Margin</th>
+          }
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of filtered(); track p.id) {
+          <tr>
+            <td>
+              <div class="package-table-name">
+                <img [src]="photo(p.name)" width="48" height="48" alt="" />
+                <div>
+                  <b>{{ p.name }}</b
+                  ><small class="cell-subtitle"
+                    >Min. {{ p.minGuests }} guests
+                    @if (p.isFeatured) {
+                      · Featured
+                    }
+                  </small>
+                </div>
+              </div>
+            </td>
+            <td>{{ p.categoryName }}</td>
+            <td>
+              <b>{{ bdt(p.salePricePerHead) }}</b>
+            </td>
+            @if (auth.hasPermission('catalog.costing.view')) {
+              <td>{{ bdt(p.totalCost) }}</td>
+              <td>
+                <span class="admin-status" [class.neutral]="p.marginPct < 0.35"
+                  >{{ (p.marginPct * 100).toFixed(1) }}%</span
+                >
+              </td>
+            }
+            <td>
+              <span class="admin-status" [class.neutral]="!p.isActive">{{
+                p.isActive ? 'Active' : 'Hidden'
+              }}</span>
+            </td>
+            <td><a [routerLink]="['/admin/catalog/packages', p.id]">Manage →</a></td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="7" class="empty-state" role="status">
+              {{
+                loading()
+                  ? 'Loading your package collection…'
+                  : 'No matching packages. Adjust your filters.'
+              }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

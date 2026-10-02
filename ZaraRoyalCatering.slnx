@@ -1,0 +1,46 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/ZRC.Infrastructure.Common/ZRC.Infrastructure.Common.csproj" />
+    <Project Path="src/BuildingBlocks/ZRC.SharedKernel/ZRC.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/Host/">
+    <Project Path="src/Host/ZRC.Api/ZRC.Api.csproj" DefaultStartup="true" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Catalog/">
+    <Project Path="src/Modules/Catalog/ZRC.Modules.Catalog.Contracts/ZRC.Modules.Catalog.Contracts.csproj" />
+    <Project Path="src/Modules/Catalog/ZRC.Modules.Catalog/ZRC.Modules.Catalog.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Content/">
+    <Project Path="src/Modules/Content/ZRC.Modules.Content/ZRC.Modules.Content.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Customers/">
+    <Project Path="src/Modules/Customers/ZRC.Modules.Customers.Contracts/ZRC.Modules.Customers.Contracts.csproj" />
+    <Project Path="src/Modules/Customers/ZRC.Modules.Customers/ZRC.Modules.Customers.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Engagement/">
+    <Project Path="src/Modules/Engagement/ZRC.Modules.Engagement/ZRC.Modules.Engagement.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Identity/">
+    <Project Path="src/Modules/Identity/ZRC.Modules.Identity.Contracts/ZRC.Modules.Identity.Contracts.csproj" />
+    <Project Path="src/Modules/Identity/ZRC.Modules.Identity/ZRC.Modules.Identity.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Navigation/">
+    <Project Path="src/Modules/Navigation/ZRC.Modules.Navigation/ZRC.Modules.Navigation.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Ordering/">
+    <Project Path="src/Modules/Ordering/ZRC.Modules.Ordering.Contracts/ZRC.Modules.Ordering.Contracts.csproj" />
+    <Project Path="src/Modules/Ordering/ZRC.Modules.Ordering/ZRC.Modules.Ordering.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Reporting/">
+    <Project Path="src/Modules/Reporting/ZRC.Modules.Reporting/ZRC.Modules.Reporting.csproj" />
+  </Folder>
+  <Folder Name="/src/Tools/">
+    <Project Path="src/Tools/ZRC.SeedImporter/ZRC.SeedImporter.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ZRC.Api.IntegrationTests/ZRC.Api.IntegrationTests.csproj" />
+    <Project Path="tests/ZRC.ArchitectureTests/ZRC.ArchitectureTests.csproj" />
+  </Folder>
+</Solution>

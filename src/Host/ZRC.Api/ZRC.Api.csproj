@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>zrc-api-dev</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.7" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.8.11" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\ZRC.SharedKernel\ZRC.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\ZRC.Infrastructure.Common\ZRC.Infrastructure.Common.csproj" />
+    <ProjectReference Include="..\..\Modules\Identity\ZRC.Modules.Identity\ZRC.Modules.Identity.csproj" />
+    <ProjectReference Include="..\..\Modules\Navigation\ZRC.Modules.Navigation\ZRC.Modules.Navigation.csproj" />
+    <ProjectReference Include="..\..\Modules\Catalog\ZRC.Modules.Catalog\ZRC.Modules.Catalog.csproj" />
+    <ProjectReference Include="..\..\Modules\Ordering\ZRC.Modules.Ordering\ZRC.Modules.Ordering.csproj" />
+    <ProjectReference Include="..\..\Modules\Customers\ZRC.Modules.Customers\ZRC.Modules.Customers.csproj" />
+    <ProjectReference Include="..\..\Modules\Engagement\ZRC.Modules.Engagement\ZRC.Modules.Engagement.csproj" />
+    <ProjectReference Include="..\..\Modules\Content\ZRC.Modules.Content\ZRC.Modules.Content.csproj" />
+    <ProjectReference Include="..\..\Modules\Reporting\ZRC.Modules.Reporting\ZRC.Modules.Reporting.csproj" />
+    <ProjectReference Include="..\..\Modules\Identity\ZRC.Modules.Identity.Contracts\ZRC.Modules.Identity.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+{
+  "ConnectionStrings": {
+    "Default": "Server=localhost,1433;Database=ZRC;User Id=sa;Password=ZRC_dev_12345!;TrustServerCertificate=True"
+  },
+  "Serilog": {
+    "MinimumLevel": "Debug"
+  }
+}

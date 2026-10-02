@@ -1,0 +1,426 @@
+<div class="admin-page-heading">
+  <div>
+    <span class="admin-eyebrow">CELEBRATIONS IN MOTION</span>
+    <h1>{{ isDetail ? 'Booking detail' : 'All orders' }}</h1>
+    <p class="muted">Keep every event, payment and next step in view.</p>
+  </div>
+  <div class="form-actions">
+    <button class="secondary" (click)="reload()" [disabled]="loading()">Refresh</button>
+    @if (!isDetail && auth.hasPermission('ordering.order.manage')) {
+      <button class="primary" (click)="openBooking()">New booking</button>
+    }
+    @if (isDetail) {
+      <a class="btn" routerLink="/admin/orders">All orders</a>
+      @if (auth.hasPermission('ordering.pricing.view')) {
+        <button class="secondary" (click)="print()">Print invoice</button>
+      }
+    }
+  </div>
+</div>
+@if (error()) {
+  <div class="admin-alert error" role="alert">{{ error() }}</div>
+}
+@if (success()) {
+  <div class="admin-alert" role="status">{{ success() }}</div>
+}
+@if (loading()) {
+  <p role="status">Loading bookings…</p>
+}
+@if (!isDetail) {
+  <section class="admin-panel">
+    <div class="admin-toolbar">
+      <input
+        type="search"
+        aria-label="Search orders"
+        placeholder="Order number, customer or phone"
+        [(ngModel)]="search"
+        (keyup.enter)="filter()"
+      /><select aria-label="Order status" [(ngModel)]="status" (change)="filter()">
+        <option value="">All statuses</option>
+        @for (s of statuses; track s) {
+          <option [value]="s">{{ s }}</option>
+        }</select
+      ><label>From<input type="date" [(ngModel)]="from" /></label
+      ><label>To<input type="date" [(ngModel)]="to" /></label
+      ><button class="secondary" (click)="filter()">Apply filters</button>
+    </div>
+    <div class="admin-table-scroll">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Booking</th>
+            <th>Event</th>
+            <th>Package</th>
+            <th>Guests</th>
+            @if (auth.hasPermission('ordering.pricing.view')) {
+              <th>Total</th>
+              <th>Balance</th>
+            }
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (o of rows(); track o.id) {
+            <tr>
+              <td>
+                <a [routerLink]="['/admin/orders', o.id]">{{ o.orderNo }}</a
+                ><small class="ops-block">{{ o.contactName }} · {{ o.contactPhone }}</small>
+              </td>
+              <td>
+                {{ o.eventDate | date: 'dd MMM yyyy'
+                }}<small class="ops-block">{{ o.eventTime.slice(0, 5) }} · {{ o.eventType }}</small>
+              </td>
+              <td>
+                {{ o.packageName }}<small class="ops-block">{{ o.variantName }}</small>
+              </td>
+              <td>{{ o.guests }}</td>
+              @if (auth.hasPermission('ordering.pricing.view')) {
+                <td>{{ bdt(o.grandTotal) }}</td>
+                <td>{{ bdt(o.balance) }}</td>
+              }
+              <td>
+                <span class="admin-status" [class.neutral]="o.status === 'Pending'">{{
+                  o.status
+                }}</span>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7">
+                {{
+                  loading()
+                    ? 'Loading…'
+                    : 'No bookings match these filters. Create your first booking to get started.'
+                }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="admin-toolbar">
+      <span>{{ total() }} bookings · Page {{ page() }} of {{ pageCount() }}</span
+      ><button (click)="changePage(-1)" [disabled]="page() === 1 || loading()">Previous</button
+      ><button (click)="changePage(1)" [disabled]="page() >= pageCount() || loading()">Next</button>
+    </div>
+  </section>
+  @if (editor()) {
+    <zrc-admin-modal
+      label="Create booking"
+      [busy]="saving()"
+      [error]="error()"
+      (dismiss)="editor.set(false)"
+    >
+      <div class="panel-heading">
+        <h2>Create a booking</h2>
+        <button class="secondary" [disabled]="saving()" (click)="editor.set(false)">Cancel</button>
+      </div>
+      <p class="muted">
+        At least 48 hours notice is required. Prices are confirmed by the server when saved.
+      </p>
+      <form [formGroup]="form" (ngSubmit)="create()">
+        <div class="ops-form-grid">
+          <label
+            >Package<select formControlName="packageId" (change)="selectPackage()">
+              <option value="">Choose a package</option>
+              @for (p of packages(); track p.id) {
+                <option [value]="p.id">
+                  {{ p.categoryName }} · {{ p.name }} · {{ bdt(p.salePricePerHead) }}/head
+                </option>
+              }
+            </select></label
+          >
+          @if (selectedPackage()?.variants?.length) {
+            <label
+              >Variant<select formControlName="variantId">
+                @for (v of selectedPackage()!.variants; track v.id) {
+                  <option [value]="v.id">{{ v.name }} (+{{ bdt(v.priceDeltaPerHead) }})</option>
+                }
+              </select></label
+            >
+          }
+          <label
+            >Guests<input
+              type="number"
+              formControlName="guests"
+              [min]="selectedPackage()?.minGuests ?? 1"
+              [max]="selectedPackage()?.maxGuests ?? 100000"
+            /><small>Minimum {{ selectedPackage()?.minGuests ?? 1 }} guests</small></label
+          ><label>Event date<input type="date" formControlName="eventDate" /></label
+          ><label>Event time (Bangladesh)<input type="time" formControlName="eventTime" /></label
+          ><label
+            >Event type<input
+              formControlName="eventType"
+              maxlength="160"
+              placeholder="Wedding, birthday, corporate lunch…"
+          /></label>
+          @if (customers().length) {
+            <label
+              >Existing customer (optional)<select
+                formControlName="customerId"
+                (change)="selectCustomer()"
+              >
+                <option value="">Enter contact manually</option>
+                @for (c of customers(); track c.id) {
+                  <option [value]="c.id">{{ c.name }} · {{ c.phone }}</option>
+                }
+              </select></label
+            >
+          }
+          <label>Contact name<input formControlName="contactName" maxlength="160" /></label
+          ><label
+            >Mobile number<input
+              type="tel"
+              formControlName="contactPhone"
+              placeholder="01XXXXXXXXX" /></label
+          ><label
+            >Venue address<textarea
+              formControlName="venueAddress"
+              maxlength="1000"
+            ></textarea></label
+          ><label
+            >Delivery charge (BDT)<input
+              type="number"
+              formControlName="deliveryCharge"
+              min="0"
+              step="0.01" /></label
+          ><label
+            >Discount (BDT)<input
+              type="number"
+              formControlName="discount"
+              min="0"
+              step="0.01" /></label
+          ><label
+            >Special instructions<textarea formControlName="notes" maxlength="2000"></textarea>
+          </label>
+        </div>
+        @if (selectedPackage()?.addOns?.length) {
+          <fieldset>
+            <legend>Optional services</legend>
+            @for (a of selectedPackage()!.addOns; track a.id) {
+              <label class="ops-check"
+                ><input
+                  #addonCheck
+                  type="checkbox"
+                  [checked]="addOnIds().includes(a.id)"
+                  (change)="toggleAddon(a.id, addonCheck.checked)"
+                />{{ a.name }} · {{ bdt(a.price) }}
+                {{ a.pricingType === 'PerHead' ? '/ head' : 'flat' }}</label
+              >
+            }
+          </fieldset>
+        }
+        @if (quote(); as q) {
+          <div class="ops-summary">
+            <span>Estimated booking total</span
+            ><b>{{
+              bdt(q.grandTotal + form.controls.deliveryCharge.value - form.controls.discount.value)
+            }}</b>
+          </div>
+        }
+        <button class="primary" type="submit" [disabled]="form.invalid || saving()">
+          {{ saving() ? 'Saving…' : 'Create booking' }}
+        </button>
+      </form>
+    </zrc-admin-modal>
+  }
+}
+@if (isDetail && detail(); as d) {
+  <section class="admin-panel ops-invoice">
+    <div class="panel-heading">
+      <div>
+        <span class="admin-eyebrow">ZAARA ROYAL CATERING</span>
+        <h2>{{ d.order.orderNo }}</h2>
+        <p>{{ d.order.contactName }} · {{ d.order.contactPhone }}</p>
+      </div>
+      <span class="admin-status">{{ d.order.status }}</span>
+    </div>
+    <div class="ops-form-grid">
+      <div>
+        <small>Event</small>
+        <p>
+          {{ d.order.eventType }} · {{ d.order.eventDate | date: 'dd MMM yyyy' }} ·
+          {{ d.order.eventTime.slice(0, 5) }}
+        </p>
+        <p>{{ d.order.venueAddress }}</p>
+      </div>
+      <div>
+        <small>Menu</small>
+        <p>
+          {{ d.order.packageName }} · {{ d.order.variantName ?? 'Standard' }} ·
+          {{ d.order.guests }} guests
+        </p>
+        <p>{{ d.snapshot.items.join(' · ') }}</p>
+        @for (a of d.snapshot.addOns; track a.id) {
+          <p>
+            {{ a.name }}
+            @if (auth.hasPermission('ordering.pricing.view')) {
+              · {{ bdt(a.price) }} {{ a.pricingType === 'PerHead' ? '/ head' : 'flat' }}
+            }
+          </p>
+        }
+      </div>
+    </div>
+    @if (auth.hasPermission('ordering.pricing.view')) {
+      <div class="admin-table-scroll">
+        <table class="data">
+          <tbody>
+            <tr>
+              <th>Meals: {{ d.order.guests }} × {{ bdt(d.order.unitPricePerHead) }}</th>
+              <td>{{ bdt(d.order.subTotal) }}</td>
+            </tr>
+            <tr>
+              <th>Add-ons</th>
+              <td>{{ bdt(d.order.addOnTotal) }}</td>
+            </tr>
+            <tr>
+              <th>Delivery / discount</th>
+              <td>{{ bdt(d.order.deliveryCharge) }} / −{{ bdt(d.order.discount) }}</td>
+            </tr>
+            <tr>
+              <th>Grand total</th>
+              <td>
+                <b>{{ bdt(d.order.grandTotal) }}</b>
+              </td>
+            </tr>
+            <tr>
+              <th>Paid / balance due</th>
+              <td>
+                {{ bdt(d.order.paidAmount) }} / <b>{{ bdt(d.order.balance) }}</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+    @if (d.order.specialInstructions) {
+      <p>Notes: {{ d.order.specialInstructions }}</p>
+    }
+  </section>
+  <section class="admin-panel ops-no-print">
+    <h2>Status timeline</h2>
+    <ol class="ops-timeline">
+      @for (h of d.history; track $index) {
+        <li>
+          <b>{{ h.toStatus }}</b
+          ><span>{{ h.changedAt | date: 'dd MMM yyyy, HH:mm' }} UTC</span>
+          <p>{{ h.note }}</p>
+        </li>
+      }
+    </ol>
+    @if (auth.hasPermission('ordering.order.manage') && d.allowedTransitions.length) {
+      <button class="primary" (click)="statusOpen.set(true); error.set(null)">Update status</button>
+      @if (statusOpen()) {
+        <zrc-admin-modal
+          label="Update booking status"
+          [busy]="saving()"
+          [error]="error()"
+          (dismiss)="statusOpen.set(false)"
+        >
+          <div class="ops-form-grid">
+            <label
+              >Next status<select [(ngModel)]="nextStatus">
+                <option value="">Choose next step</option>
+                @for (s of d.allowedTransitions; track s) {
+                  <option [value]="s">{{ s }}</option>
+                }
+              </select></label
+            ><label>Staff note<input [(ngModel)]="statusNote" maxlength="1000" /></label>
+          </div>
+          @if (nextStatus === 'Cancelled' || nextStatus === 'Rejected') {
+            <p class="error">
+              This closes the booking. Paid bookings require refund handling before cancellation.
+            </p>
+          }
+          <button class="primary" (click)="transition()" [disabled]="!nextStatus || saving()">
+            Confirm status change</button
+          ><button class="secondary" [disabled]="saving()" (click)="statusOpen.set(false)">
+            Cancel
+          </button></zrc-admin-modal
+        >
+      }
+    }
+  </section>
+  @if (auth.hasPermission('ordering.pricing.view')) {
+    <section class="admin-panel ops-no-print">
+      <h2>Payments</h2>
+      <div class="admin-table-scroll">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Method</th>
+              <th>Reference</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of d.payments; track p.id) {
+              <tr>
+                <td>{{ p.paidAt | date: 'dd MMM yyyy, HH:mm' }} UTC</td>
+                <td>{{ p.method }}</td>
+                <td>{{ p.reference ?? '—' }}</td>
+                <td>{{ bdt(p.amount) }}</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4">No payments recorded.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      @if (
+        auth.hasPermission('ordering.payment.record') &&
+        d.order.balance > 0 &&
+        d.order.status !== 'Cancelled' &&
+        d.order.status !== 'Rejected'
+      ) {
+        <button class="primary" (click)="paymentOpen.set(true); error.set(null)">
+          Add payment
+        </button>
+        @if (paymentOpen()) {
+          <zrc-admin-modal
+            label="Record payment"
+            [busy]="saving()"
+            [error]="error()"
+            (dismiss)="paymentOpen.set(false)"
+          >
+            <div class="ops-form-grid">
+              <label
+                >Method<select [(ngModel)]="method">
+                  <option>Cash</option>
+                  <option>bKash</option>
+                  <option>Nagad</option>
+                  <option>Bank</option>
+                  <option>Card</option>
+                </select></label
+              ><label
+                >Amount (BDT)<input
+                  type="number"
+                  [(ngModel)]="amount"
+                  min="0.01"
+                  step="0.01"
+                  [max]="d.order.balance" /></label
+              ><label>Reference<input [(ngModel)]="reference" maxlength="120" /></label>
+            </div>
+            <button
+              class="primary"
+              (click)="recordPayment()"
+              [disabled]="
+                amount <= 0 ||
+                amount > d.order.balance ||
+                saving() ||
+                (method !== 'Cash' && !reference.trim())
+              "
+            >
+              Record payment</button
+            ><button class="secondary" [disabled]="saving()" (click)="paymentOpen.set(false)">
+              Cancel
+            </button></zrc-admin-modal
+          >
+        }
+      }
+    </section>
+  }
+}

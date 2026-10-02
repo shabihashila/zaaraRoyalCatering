@@ -1,0 +1,37 @@
+# .NET
+bin/
+obj/
+out/
+publish/
+TestResults/
+.vs/
+*.user
+*.suo
+
+# Secrets / env
+appsettings.Development.json
+*.pfx
+.env
+.env.*
+!.env.example
+*.log
+modal-upgrade.py
+modal-finish.py
+
+# DB / tools
+*.dacpac
+*.bacpac
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+web/coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Excel source (owner-provided, do not commit real workbook with PII if any)
+# Keep zaara_royal_catering_menu.xlsx in repo root per guideline (small file OK).
+!zaara_royal_catering_menu.xlsx

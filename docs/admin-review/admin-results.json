@@ -1,0 +1,156 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "route": "/admin",
+      "url": "/admin",
+      "heading": "Welcome back, Super.",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/catalog/packages",
+      "url": "/admin/catalog/packages",
+      "heading": "Package management",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/catalog/categories",
+      "url": "/admin/catalog/categories",
+      "heading": "Event categories",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/catalog/items",
+      "url": "/admin/catalog/items",
+      "heading": "Menu items",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/catalog/addons",
+      "url": "/admin/catalog/addons",
+      "heading": "Add-on services",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/catalog/costing",
+      "url": "/admin/catalog/costing",
+      "heading": "Costing & margins",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/users",
+      "url": "/admin/users",
+      "heading": "Team & access",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/menu",
+      "url": "/admin/menu",
+      "heading": "Menu Management",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 1440,
+      "route": "/admin/audit",
+      "url": "/admin/audit",
+      "heading": "Audit history",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin",
+      "url": "/admin",
+      "heading": "Welcome back, Super.",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/catalog/packages",
+      "url": "/admin/catalog/packages",
+      "heading": "Package management",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/catalog/categories",
+      "url": "/admin/catalog/categories",
+      "heading": "Event categories",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/catalog/items",
+      "url": "/admin/catalog/items",
+      "heading": "Menu items",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/catalog/addons",
+      "url": "/admin/catalog/addons",
+      "heading": "Add-on services",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/catalog/costing",
+      "url": "/admin/catalog/costing",
+      "heading": "Costing & margins",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/users",
+      "url": "/admin/users",
+      "heading": "Team & access",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/menu",
+      "url": "/admin/menu",
+      "heading": "Menu Management",
+      "overflow": false,
+      "broken": []
+    },
+    {
+      "width": 390,
+      "route": "/admin/audit",
+      "url": "/admin/audit",
+      "heading": "Audit history",
+      "overflow": false,
+      "broken": []
+    }
+  ],
+  "errors": [],
+  "interactions": {
+    "packageSearch": true,
+    "liveMarginChanges": true,
+    "categoryEditorDisablesInvalidSave": true,
+    "mobileNav": true,
+    "mobileNavCloses": true
+  }
+}

@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Build backend
+        run: dotnet build ZaraRoyalCatering.slnx --nologo -v minimal
+      - name: Architecture tests
+        run: dotnet test tests/ZRC.ArchitectureTests --no-build --nologo -v minimal
+      - name: Build DACPAC
+        run: dotnet build database/ZRC.Database/ZRC.Database.sqlproj --nologo -v minimal
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - working-directory: web
+        run: |
+          npm ci
+          npm run build
+          npm run lint

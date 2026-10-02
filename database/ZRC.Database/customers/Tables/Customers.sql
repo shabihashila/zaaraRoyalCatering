@@ -1,0 +1,18 @@
+CREATE TABLE [customers].[Customers]
+(
+ [Id] UNIQUEIDENTIFIER NOT NULL CONSTRAINT [DF_Customers_Id] DEFAULT NEWID(),
+ [Name] NVARCHAR(160) NOT NULL,
+ [Phone] NVARCHAR(20) NOT NULL,
+ [Email] NVARCHAR(254) NULL,
+ [Address] NVARCHAR(1000) NULL,
+ [Notes] NVARCHAR(2000) NULL,
+ [IsDeleted] BIT NOT NULL CONSTRAINT [DF_Customers_Deleted] DEFAULT 0,
+ [CreatedAt] DATETIME2(3) NOT NULL CONSTRAINT [DF_Customers_Created] DEFAULT SYSUTCDATETIME(),
+ [CreatedBy] NVARCHAR(450) NULL,
+ [UpdatedAt] DATETIME2(3) NULL, [UpdatedBy] NVARCHAR(450) NULL,
+ [RowVersion] ROWVERSION NOT NULL,
+ CONSTRAINT [PK_Customers] PRIMARY KEY ([Id]),
+ CONSTRAINT [CK_Customers_Name] CHECK (LEN(LTRIM(RTRIM([Name]))) > 0)
+);
+GO
+CREATE UNIQUE INDEX [UX_Customers_Phone] ON [customers].[Customers] ([Phone]) WHERE [IsDeleted] = 0;

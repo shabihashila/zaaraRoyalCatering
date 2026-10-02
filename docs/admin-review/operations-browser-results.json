@@ -1,0 +1,130 @@
+{
+  "routes": [
+    {
+      "width": 1440,
+      "route": "/admin/orders",
+      "url": "/admin/orders",
+      "heading": "All orders",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/admin/orders/calendar",
+      "url": "/admin/orders/calendar",
+      "heading": "Event calendar",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/admin/orders/kitchen",
+      "url": "/admin/orders/kitchen",
+      "heading": "Kitchen prep",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/admin/customers",
+      "url": "/admin/customers",
+      "heading": "Customers",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/admin/engagement/reviews",
+      "url": "/admin/engagement/reviews",
+      "heading": "Reviews & testimonials",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/admin/engagement/requests",
+      "url": "/admin/engagement/requests",
+      "heading": "Customer inbox",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/admin/content",
+      "url": "/admin/content",
+      "heading": "Website content",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/admin/reports",
+      "url": "/admin/reports",
+      "heading": "Business reports",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/orders",
+      "url": "/admin/orders",
+      "heading": "All orders",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/orders/calendar",
+      "url": "/admin/orders/calendar",
+      "heading": "Event calendar",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/orders/kitchen",
+      "url": "/admin/orders/kitchen",
+      "heading": "Kitchen prep",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/customers",
+      "url": "/admin/customers",
+      "heading": "Customers",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/engagement/reviews",
+      "url": "/admin/engagement/reviews",
+      "heading": "Reviews & testimonials",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/engagement/requests",
+      "url": "/admin/engagement/requests",
+      "heading": "Customer inbox",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/content",
+      "url": "/admin/content",
+      "heading": "Website content",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/admin/reports",
+      "url": "/admin/reports",
+      "heading": "Business reports",
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "checks": {
+    "seededMenusAvailable": true,
+    "muttonBooking34800": true,
+    "statusConfirmation": true,
+    "paymentBalance33800": true,
+    "moneyFreeKitchen": true,
+    "moneyFreeKitchenOrderDetail": true,
+    "publishedFaqVisible": true,
+    "contactStoredInInbox": true,
+    "printLayout": true,
+    "restrictedReportsDenied": true
+  },
+  "database": "ZRC_OperationsTests"
+}

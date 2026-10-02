@@ -1,0 +1,6 @@
+{
+  "reloadKeepsSession": true,
+  "noFinancialMetrics": true,
+  "deniedCostingRedirect": true,
+  "noCatalogRequests": true
+}

@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /menu
+Allow: /packages/
+Allow: /about
+Allow: /gallery
+Allow: /faqs
+Allow: /contact
+Allow: /inquiry
+Disallow: /admin
+Disallow: /login
+
+Sitemap: https://zaararoyal.local/sitemap.xml
