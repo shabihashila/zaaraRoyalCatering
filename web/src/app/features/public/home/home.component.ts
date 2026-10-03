@@ -6,8 +6,7 @@ import type { PublicCategory, PublicPackage } from '../catalog/catalog.models';
 import { formatBDT } from '../../../core/bdt';
 import { SeoService } from '../../../core/seo.service';
 import { MotionService } from '../../../core/motion.service';
-import { FOOD_IMAGES, foodImage, foodSrcSet } from '../food-images';
-import { GALLERY, TESTIMONIALS } from '../site-content';
+import { HOME_PACKAGE_IMAGES, foodSrcSet } from '../food-images';
 import { ManagedContentService } from '../managed-content.service';
 
 @Component({
@@ -15,50 +14,30 @@ import { ManagedContentService } from '../managed-content.service';
   standalone: true,
   imports: [RouterLink, ThreeHeroComponent],
   template: `
-    <section class="hero" #heroScope>
+    <section class="hero" aria-labelledby="home-heading">
       <div class="hero-inner">
-        <div>
-          <span class="badge">THE ART OF BANGLADESHI HOSPITALITY</span>
-          <h1 data-stagger>
-            @if (content.entry('Hero', 'home'); as hero) {
-              {{ hero.title }}
-            } @else {
-              A feast to remember.<br /><em>A moment to cherish.</em>
-            }
+        <div class="hero-copy">
+          <span class="hero-brand">ZAARA ROYAL CATERING</span>
+          <span class="badge">BANGLADESHI FLAVOURS. ROYAL HOSPITALITY.</span>
+          <h1 id="home-heading" data-stagger>
+            @if (content.entry('Hero', 'home'); as hero) { {{ hero.title }} }
+            @else { Made for<br /> <em>your celebration.</em> }
           </h1>
-          <p class="lead" data-stagger>
-            {{
-              content.entry('Hero', 'home')?.body ??
-                'From fragrant kacchi to a generous wedding spread, bring the warmth of Bengali food to your table. Find a menu your guests will love.'
-            }}
-          </p>
+          <p class="lead" data-stagger>{{ content.entry('Hero', 'home')?.body ?? 'Slow-cooked kacchi. Generous spreads. Thoughtful service. Bring the flavours of Bangladesh to your next gathering.' }}</p>
           <div class="hero-ctas" data-stagger>
-            <a routerLink="/menu" class="btn btn-gold">Browse packages</a>
-            <a routerLink="/inquiry" class="btn btn-outline">Plan a big event</a>
+            <a routerLink="/menu" class="btn btn-primary">Explore our menus &rarr;</a>
+            <a routerLink="/inquiry" class="btn btn-outline">Plan your event</a>
           </div>
           <div class="stats" data-stagger>
-            <div><b data-count="19">19</b><span>signature packages</span></div>
-            <div><b data-count="6">6</b><span>event categories</span></div>
-            <div><b data-count="81">81</b><span>distinct menu items</span></div>
+            <div><b>{{ packageCount() || '16' }}</b><span>curated menus</span></div>
+            <div><b>Per guest</b><span>transparent pricing</span></div>
+            <div><b>Your occasion</b><span>our attention to detail</span></div>
           </div>
         </div>
-        <div class="hero-food">
-          <img
-            [src]="content.entry('Hero', 'home')?.imageUrl ?? photos.feast"
-            [attr.srcset]="imageSrcSet(content.entry('Hero', 'home')?.imageUrl ?? photos.feast)"
-            sizes="(max-width: 800px) 100vw, 50vw"
-            width="1280"
-            height="960"
-            fetchpriority="high"
-            alt="A generous biryani spread with golden rice, chicken and fresh accompaniments"
-          />
-          <div class="hero-food-caption">
-            <span class="eyebrow">A TASTE OF CELEBRATION</span>
-            <h2>Tradition, served beautifully.</h2>
-            <a routerLink="/packages/lunch-royal-kacchi"
-              >Discover our Royal Kacchi package &rarr;</a
-            >
-          </div>
+        <div class="hero-vessel">
+          <zrc-three-hero />
+          <span class="hero-vessel-label">THE ROYAL HANDI</span>
+          <p class="hero-vessel-caption">A tradition of generous hospitality.</p>
         </div>
       </div>
     </section>
@@ -69,24 +48,15 @@ import { ManagedContentService } from '../managed-content.service';
         <a routerLink="/menu">All packages →</a>
       </div>
       <div class="grid grid-3">
-        @for (c of categories(); track c.slug) {
+        @for (c of categories(); track c.slug; let index = $index) {
           <a
-            class="card cat-card tilt reveal"
+            class="card cat-card occasion-card reveal"
             [routerLink]="['/menu']"
             [queryParams]="{ category: c.slug }"
           >
-            <img
-              class="card-food"
-              [src]="imageFor(c.slug, c.imageUrl)"
-              [attr.srcset]="imageSrcSet(imageFor(c.slug, c.imageUrl))"
-              sizes="(max-width: 600px) 100vw, (max-width: 850px) 50vw, 33vw"
-              width="640"
-              height="480"
-              loading="lazy"
-              alt=""
-            />
+            <span class="occasion-number">0{{ index + 1 }}</span>
             <h3>{{ c.name }}</h3>
-            <p class="muted">{{ c.description ?? '' }} · {{ c.packageCount }} packages</p>
+            <p class="muted">{{ c.description || occasionDescription(c.slug) }} · {{ c.packageCount }} packages</p><span class="occasion-arrow" aria-hidden="true">&rarr;</span>
           </a>
         } @empty {
           <article class="card"><p class="muted">Loading categories…</p></article>
@@ -127,16 +97,10 @@ import { ManagedContentService } from '../managed-content.service';
       <div class="grid grid-3">
         @for (p of featured(); track p.slug) {
           <a class="card cat-card reveal" [routerLink]="['/packages', p.slug]">
-            <img
-              class="card-food"
-              [src]="imageFor(p.name, p.heroImageUrl)"
-              [attr.srcset]="imageSrcSet(imageFor(p.name, p.heroImageUrl))"
-              sizes="(max-width: 600px) 100vw, (max-width: 850px) 50vw, 33vw"
-              width="640"
-              height="480"
-              loading="lazy"
-              [alt]="p.categoryName + ' menu inspiration'"
-            /><span class="badge">{{ p.categoryName }}</span>
+            @if (packagePhoto(p.slug); as image) {
+              <img class="card-food" [src]="image" [attr.srcset]="imageSrcSet(image)" sizes="(max-width: 600px) 100vw, 33vw" width="640" height="480" loading="lazy" [alt]="packagePhotoAlt(p.slug)" />
+            }
+            <span class="badge">{{ p.categoryName }}</span>
             <h3 class="chef-title">{{ p.name }}</h3>
             @if (p.tagline) {
               <p class="muted">{{ p.tagline }}</p>
@@ -173,39 +137,15 @@ import { ManagedContentService } from '../managed-content.service';
     </section>
 
     <section class="section">
-      <div class="section-head">
-        <h2>From the gallery</h2>
-        <a routerLink="/gallery">Open gallery →</a>
+      <div class="gallery-invitation">
+        <div><span class="badge">A taste of Zaara Royal</span><h2>Good food, beautifully served.</h2><p class="muted">Explore our food collection, from fragrant rice to refreshing accompaniments and a sweet finish.</p></div>
+        <a routerLink="/gallery" class="btn btn-outline">Explore the gallery &rarr;</a>
       </div>
-      <div class="grid grid-3">
-        @for (g of galleryTeaser; track g.title) {
-          <a class="card cat-card reveal" routerLink="/gallery">
-            <img
-              class="card-food"
-              [src]="g.image"
-              [attr.srcset]="imageSrcSet(g.image)"
-              sizes="(max-width: 600px) 100vw, 33vw"
-              width="640"
-              height="480"
-              loading="lazy"
-              [alt]="g.caption"
-            />
-            <h3>{{ g.title }}</h3>
-            <p class="muted">{{ g.caption }}</p>
-          </a>
-        }
-      </div>
-      <details class="handi-preview" (toggle)="onHandiToggle($event)">
-        <summary>A little royal magic &mdash; explore our serving handi</summary>
-        @if (handiOpen()) {
-          <zrc-three-hero />
-        }
-      </details>
       <div class="cta-band reveal">
         <h2>Planning a wedding or a 500-guest event?</h2>
         <p>Send us a custom event inquiry and get a tailored quote for your celebration.</p>
         <p>
-          <a routerLink="/inquiry" class="btn btn-gold">Start a custom inquiry</a>
+          <a routerLink="/inquiry" class="btn btn-primary">Start a custom inquiry</a>
           <a routerLink="/menu" class="btn btn-outline">Or start with the menu</a>
         </p>
       </div>
@@ -224,13 +164,12 @@ export class HomeComponent implements OnInit {
   get testimonials() {
     return this.content.testimonials();
   }
-  get galleryTeaser() {
-    return this.content.gallery().slice(-3);
-  }
+
   readonly bdt = formatBDT;
-  readonly photos = FOOD_IMAGES;
-  readonly handiOpen = signal(false);
-  readonly imageFor = foodImage;
+  readonly packageCount = signal(0);
+  readonly packagePhoto = (slug: string): string | null => HOME_PACKAGE_IMAGES[slug]?.image ?? null;
+  readonly packagePhotoAlt = (slug: string): string => HOME_PACKAGE_IMAGES[slug]?.alt ?? '';
+  readonly occasionDescription = (slug: string): string => ({ breakfast: 'A welcoming start to the day', lunch: 'Generous midday spreads', dinner: 'An evening worth sharing', 'corporate-program': 'Thoughtfully planned for your team', 'house-party': 'Bring the celebration home' }[slug] ?? 'Menus for your gathering');
   readonly imageSrcSet = foodSrcSet;
 
   private destroySmooth: (() => void) | null = null;
@@ -239,14 +178,15 @@ export class HomeComponent implements OnInit {
     this.seo.setPage({
       title: 'Royal feasts, crafted for your moments',
       description:
-        'Zaara Royal Catering — 19 per-head meal packages for weddings, corporate programs and house parties across Bangladesh. Prices in BDT per head.',
+        'Zaara Royal Catering — 16 per-head meal packages for weddings, corporate programs and house parties across Bangladesh. Prices in BDT per head.',
       path: '/',
     });
     this.seo.setHomeJsonLd();
     this.api.listCategories().subscribe((c) => this.categories.set(c));
     this.api.listPackages({}).subscribe((rows) => {
+      this.packageCount.set(rows.length);
       const feat = rows.filter((p) => p.isFeatured);
-      this.featured.set(feat.length > 0 ? feat.slice(0, 3) : rows.slice(5, 8));
+      this.featured.set(feat.length > 0 ? feat.slice(0, 3) : rows.filter(p => p.slug in HOME_PACKAGE_IMAGES).slice(0, 3));
       setTimeout(() => this.motion.initReveal(), 0);
     });
     const el = (this.host.nativeElement as HTMLElement).querySelector(
@@ -261,7 +201,4 @@ export class HomeComponent implements OnInit {
     this.destroySmooth?.();
   }
 
-  onHandiToggle(event: Event): void {
-    this.handiOpen.set((event.target as HTMLDetailsElement).open);
-  }
 }

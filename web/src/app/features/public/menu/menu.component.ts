@@ -1,5 +1,4 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { foodImage, foodSrcSet } from '../food-images';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CatalogApiService } from '../catalog/catalog-api.service';
@@ -40,21 +39,21 @@ import { MotionService } from '../../../core/motion.service';
         <p class="muted" role="status">Loading packages…</p>
       } @else if (packages().length === 0) {
         <div class="card"><h2>No packages match</h2><p class="muted">Try fewer guests or a higher budget — or send a custom inquiry for a tailored menu.</p>
-        <a routerLink="/inquiry" class="btn btn-gold">Custom inquiry</a></div>
+        <a routerLink="/inquiry" class="btn btn-primary">Custom inquiry</a></div>
       } @else {
         <p class="muted" role="status">{{ packages().length }} packages</p>
         <div class="grid grid-3">
           @for (p of packages(); track p.slug) {
             <article class="flip" [class.flipped]="flipped() === p.slug" (click)="toggleFlip(p.slug)" (keydown.enter)="onCardKey(p.slug, $event)" tabindex="0" [attr.aria-label]="p.name">
               <div class="flip-inner">
-                <div class="flip-face card" [attr.inert]="flipped() === p.slug ? '' : null" [attr.aria-hidden]="flipped() === p.slug"><img class="card-food" [src]="imageFor(p.name, p.heroImageUrl)" [attr.srcset]="imageSrcSet(imageFor(p.name, p.heroImageUrl))" sizes="(max-width: 600px) 100vw, (max-width: 850px) 50vw, 33vw" width="640" height="480" loading="lazy" [alt]="p.categoryName + ' food inspiration'" />
-                  <span class="badge">{{ p.categoryName }}</span>
+                <div class="flip-face card" [attr.inert]="flipped() === p.slug ? '' : null" [attr.aria-hidden]="flipped() === p.slug">
+                  <div class="menu-card-label"><span>ZAARA ROYAL</span><span>{{ p.items.length }} dishes</span></div><span class="badge">{{ p.categoryName }}</span>
                   <h3 class="chef-title">{{ p.name }}</h3>
                   @if (p.tagline) { <p class="muted">{{ p.tagline }}</p> }
                   <p class="price">{{ bdt(p.salePricePerHead) }} <small class="muted">/ head</small></p>
                   <p class="muted small">Min {{ p.minGuests }} guests · {{ p.items.length }} items · tap to see items</p>
                   <p>
-                    <a [routerLink]="['/packages', p.slug]" (click)="$event.stopPropagation()" class="btn btn-gold">View & quote</a>
+                    <a [routerLink]="['/packages', p.slug]" (click)="$event.stopPropagation()" class="btn btn-primary">View & quote</a>
                     <button type="button" class="secondary" (click)="toggleCompare(p, $event)">{{ inCompare(p.slug) ? 'Remove' : 'Compare' }}</button>
                   </p>
                 </div>
@@ -66,7 +65,7 @@ import { MotionService } from '../../../core/motion.service';
                   @if (p.inclusions.length > 0) {
                     <p class="muted small">Includes: {{ p.inclusions.join(' · ') }}</p>
                   }
-                  <p><a [routerLink]="['/packages', p.slug]" (click)="$event.stopPropagation()" class="btn btn-gold">View & quote</a></p>
+                  <p><a [routerLink]="['/packages', p.slug]" (click)="$event.stopPropagation()" class="btn btn-primary">View & quote</a></p>
                 </div>
               </div>
             </article>
@@ -97,8 +96,6 @@ import { MotionService } from '../../../core/motion.service';
 export class MenuComponent implements OnInit {
   private readonly api = inject(CatalogApiService);
   private readonly route = inject(ActivatedRoute);
-  readonly imageFor = foodImage;
-  readonly imageSrcSet = foodSrcSet;
   private readonly seo = inject(SeoService);
   private readonly motion = inject(MotionService);
 
@@ -117,7 +114,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.seo.setPage({
       title: 'Menu & packages',
-      description: 'Browse 19 per-head meal packages — breakfast, lunch, dinner, milad, corporate and house parties. Prices in BDT per head.',
+      description: 'Browse 16 per-head meal packages — breakfast, lunch, dinner, corporate and house parties. Prices in BDT per head.',
       path: '/menu',
     });
     this.api.listCategories().subscribe((c) => this.categories.set(c));

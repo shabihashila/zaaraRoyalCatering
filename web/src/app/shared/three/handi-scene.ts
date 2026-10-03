@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 export interface HandiSceneHandle {
   dispose(): void;
@@ -15,35 +16,53 @@ export function createHandiScene(
   opts: { reducedMotion: boolean },
 ): HandiSceneHandle {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.setClearColor(0x000000, 0);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   const scene = new THREE.Scene();
+  const environment = new RoomEnvironment();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const environmentMap = pmrem.fromScene(environment, 0.04);
+  scene.environment = environmentMap.texture;
+  environment.dispose();
+  pmrem.dispose();
   const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-  camera.position.set(0, 1.6, 6.2);
-  camera.lookAt(0, 0.7, 0);
+  camera.position.set(0, 2.7, 6.7);
+  camera.lookAt(0, 1.05, 0);
 
-  scene.add(new THREE.HemisphereLight(0xfff3d6, 0x0d3b2e, 1.1));
+  scene.add(new THREE.HemisphereLight(0xfff5e8, 0x600b01, 1.5));
   const rim = new THREE.DirectionalLight(0xe7cf9a, 2.2);
   rim.position.set(-3.5, 4, -2.5);
   scene.add(rim);
   const key = new THREE.DirectionalLight(0xffffff, 1.4);
   key.position.set(3, 5, 4);
+  key.castShadow = true;
+  key.shadow.mapSize.set(512, 512);
+  key.shadow.camera.left = -4;
+  key.shadow.camera.right = 4;
+  key.shadow.camera.top = 4;
+  key.shadow.camera.bottom = -4;
+  key.shadow.bias = -0.001;
   scene.add(key);
 
   const group = new THREE.Group();
   scene.add(group);
 
   const brass = new THREE.MeshStandardMaterial({
-    color: 0x8a6a25,
-    metalness: 0.85,
-    roughness: 0.32,
+    color: 0xbba58e,
+    metalness: 0.82,
+    roughness: 0.28,
   });
   const brassDark = new THREE.MeshStandardMaterial({
-    color: 0x5c451a,
-    metalness: 0.8,
-    roughness: 0.45,
+    color: 0xb88b32,
+    metalness: 0.78,
+    roughness: 0.3,
   });
+  const enamel = new THREE.MeshPhysicalMaterial({ color: 0x600b01, metalness: 0.2, roughness: 0.36, clearcoat: 0.3, clearcoatRoughness: 0.25 });
 
   // Handi body (lathe profile)
   const pts: THREE.Vector2[] = [];
@@ -57,7 +76,10 @@ export function createHandiScene(
     [0.9, 1.6],
   ];
   for (const [x, y] of profile) pts.push(new THREE.Vector2(x, y));
-  const body = new THREE.Mesh(new THREE.LatheGeometry(pts, 48), brass);
+  const profileCurve = new THREE.SplineCurve(pts);
+  const body = new THREE.Mesh(new THREE.LatheGeometry(profileCurve.getPoints(64), 64), brass);
+  body.castShadow = true;
+  body.receiveShadow = true;
   group.add(body);
 
   // Rim torus + lid + knob
@@ -65,41 +87,43 @@ export function createHandiScene(
   rimRing.rotation.x = Math.PI / 2;
   rimRing.position.y = 1.62;
   group.add(rimRing);
-  const lid = new THREE.Mesh(new THREE.SphereGeometry(0.88, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.6), brass);
+  const lid = new THREE.Mesh(new THREE.SphereGeometry(0.88, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2.6), enamel);
   lid.position.y = 1.6;
+  lid.scale.y = 0.42;
+  lid.castShadow = true;
   group.add(lid);
   const knob = new THREE.Mesh(new THREE.SphereGeometry(0.14, 16, 12), brassDark);
-  knob.position.y = 2.5;
+  knob.position.y = 2.08;
+  knob.scale.y = 0.6;
   group.add(knob);
 
   // Platter
-  const platter = new THREE.Mesh(new THREE.CylinderGeometry(1.7, 1.9, 0.12, 48), brassDark);
+  const platter = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 0.06, 48), new THREE.MeshStandardMaterial({ color: 0x8b7664, metalness: 0.7, roughness: 0.4 }));
   platter.position.y = -0.08;
   group.add(platter);
-
-  // Steam particles
-  const COUNT = 120;
-  const positions = new Float32Array(COUNT * 3);
-  const seeds = new Float32Array(COUNT);
-  for (let i = 0; i < COUNT; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 1.1;
-    positions[i * 3 + 1] = 1.7 + Math.random() * 2.2;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 1.1;
-    seeds[i] = Math.random() * Math.PI * 2;
+  const band = new THREE.Mesh(new THREE.TorusGeometry(1.13, 0.035, 12, 64), enamel);
+  band.rotation.x = Math.PI / 2;
+  band.position.y = 0.35;
+  group.add(band);
+  for (const side of [-1, 1]) {
+    const handle = new THREE.Mesh(new THREE.TorusGeometry(0.27, 0.055, 12, 32), brassDark);
+    handle.position.set(side * 1.35, 1.25, 0);
+    handle.castShadow = true;
+    group.add(handle);
   }
-  const steamGeo = new THREE.BufferGeometry();
-  steamGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const steam = new THREE.Points(
-    steamGeo,
-    new THREE.PointsMaterial({
-      color: 0xfaf5ea,
-      size: 0.06,
-      transparent: true,
-      opacity: 0.55,
-      depthWrite: false,
-    }),
-  );
-  group.add(steam);
+  const medallion = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.21, 0.035, 32), enamel);
+  medallion.rotation.x = Math.PI / 2;
+  medallion.position.set(0, 0.95, 1.3);
+  group.add(medallion);
+  const sealRim = new THREE.Mesh(new THREE.TorusGeometry(0.21, 0.018, 8, 32), brassDark);
+  sealRim.position.copy(medallion.position);
+  sealRim.position.z += 0.025;
+  group.add(sealRim);
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.ShadowMaterial({ opacity: 0.25 }));
+  shadow.rotation.x = -Math.PI / 2;
+  shadow.position.y = -0.16;
+  shadow.receiveShadow = true;
+  scene.add(shadow);
 
   let tiltX = 0;
   let tiltY = 0;
@@ -114,22 +138,22 @@ export function createHandiScene(
     const r = canvas.getBoundingClientRect();
     const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
     const ny = ((e.clientY - r.top) / r.height - 0.5) * 2;
-    targetTiltY = nx * 0.35;
-    targetTiltX = ny * 0.22;
+    targetTiltY = THREE.MathUtils.clamp(nx, -1, 1) * 0.12;
+    targetTiltX = THREE.MathUtils.clamp(ny, -1, 1) * 0.07;
   };
   const onScroll = (): void => {
     const r = canvas.getBoundingClientRect();
     const progress = Math.min(Math.max(-r.top / window.innerHeight, 0), 1);
-    scrollDolly = progress * 1.2;
+    scrollDolly = progress * 0.15;
   };
   const onVisibility = (): void => {
     visible = document.visibilityState === 'visible';
-    if (visible && !opts.reducedMotion) loop();
+    if (visible && !opts.reducedMotion) resume();
   };
   const io = new IntersectionObserver(
     (entries) => {
       visible = entries[0]?.isIntersecting ?? true;
-      if (visible && !opts.reducedMotion) loop();
+      if (visible && !opts.reducedMotion) resume();
     },
     { threshold: 0.05 },
   );
@@ -140,11 +164,13 @@ export function createHandiScene(
     const h = canvas.clientHeight || 420;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
+    camera.position.z = 6.7 / Math.min(camera.aspect, 1);
     camera.updateProjectionMatrix();
+    if (opts.reducedMotion) renderer.render(scene, camera);
   }
   resize();
   window.addEventListener('resize', resize);
-  window.addEventListener('mousemove', onMouse);
+  canvas.addEventListener('mousemove', onMouse);
   window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('visibilitychange', onVisibility);
 
@@ -154,31 +180,27 @@ export function createHandiScene(
     const t = clock.getElapsedTime();
     tiltX += (targetTiltX - tiltX) * 0.05;
     tiltY += (targetTiltY - tiltY) * 0.05;
-    group.rotation.y = t * 0.25 + tiltY;
+    group.rotation.y = Math.sin(t * 0.22) * 0.13 + tiltY;
     group.rotation.x = tiltX * 0.6;
-    camera.position.z = 6.2 - scrollDolly;
-    const pos = steamGeo.getAttribute('position') as THREE.BufferAttribute;
-    const arr = pos.array as Float32Array;
-    for (let i = 0; i < COUNT; i++) {
-      arr[i * 3] += Math.sin(t * 1.4 + seeds[i]) * 0.0012;
-      arr[i * 3 + 1] += 0.004;
-      if (arr[i * 3 + 1] > 4.1) arr[i * 3 + 1] = 1.7;
-    }
-    pos.needsUpdate = true;
+    camera.position.z = 6.7 / Math.min(camera.aspect, 1) - scrollDolly;
     renderer.render(scene, camera);
   }
 
   function loop(): void {
+    raf = 0;
     if (disposed) return;
     if (!visible || document.visibilityState !== 'visible') return;
     frame();
     raf = requestAnimationFrame(loop);
   }
+  function resume(): void {
+    if (!raf && !disposed && visible && document.visibilityState === 'visible') raf = requestAnimationFrame(loop);
+  }
 
   if (opts.reducedMotion) {
     frame();
   } else {
-    loop();
+    resume();
   }
 
   return {
@@ -187,10 +209,17 @@ export function createHandiScene(
       cancelAnimationFrame(raf);
       io.disconnect();
       window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', onMouse);
+      canvas.removeEventListener('mousemove', onMouse);
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('visibilitychange', onVisibility);
-      steamGeo.dispose();
+      scene.traverse(object => {
+        if (object instanceof THREE.Mesh || object instanceof THREE.Points) {
+          object.geometry.dispose();
+          const materials = Array.isArray(object.material) ? object.material : [object.material];
+          materials.forEach(material => material.dispose());
+        }
+      });
+      environmentMap.dispose();
       renderer.dispose();
     },
   };

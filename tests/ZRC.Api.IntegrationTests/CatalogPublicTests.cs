@@ -11,23 +11,23 @@ public sealed class CatalogPublicTests : IClassFixture<WebApplicationFactory<Pro
     public CatalogPublicTests(WebApplicationFactory<Program> factory) => _factory = factory;
 
     [Fact]
-    public async Task Categories_returns_six()
+    public async Task Categories_returns_five()
     {
         var client = _factory.CreateClient();
         var res = await client.GetAsync("/api/v1/public/catalog/categories");
         Assert.Equal(HttpStatusCode.OK, res.StatusCode);
         var doc = JsonDocument.Parse(await res.Content.ReadAsStringAsync());
-        Assert.Equal(6, doc.RootElement.GetArrayLength());
+        Assert.Equal(5, doc.RootElement.GetArrayLength());
     }
 
     [Fact]
-    public async Task Packages_returns_nineteen()
+    public async Task Packages_returns_sixteen()
     {
         var client = _factory.CreateClient();
         var res = await client.GetAsync("/api/v1/public/catalog/packages");
         Assert.Equal(HttpStatusCode.OK, res.StatusCode);
         var doc = JsonDocument.Parse(await res.Content.ReadAsStringAsync());
-        Assert.Equal(19, doc.RootElement.GetArrayLength());
+        Assert.Equal(16, doc.RootElement.GetArrayLength());
     }
 
     [Fact]

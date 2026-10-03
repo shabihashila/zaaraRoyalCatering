@@ -1,6 +1,5 @@
 import { Component, signal, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { SITE_SETTINGS } from '../../features/public/site-content';
 import { ManagedContentService } from '../../features/public/managed-content.service';
 
 @Component({
@@ -11,7 +10,7 @@ import { ManagedContentService } from '../../features/public/managed-content.ser
     <a class="skip" routerLink="/" fragment="main">Skip to content</a>
     <header class="public-header">
       <a class="brand" routerLink="/"
-        ><img src="/assets/brand/chef-cap.svg" width="44" height="44" alt="" /><span
+        ><span
           >Zaara Royal<small>CATERING &middot; BANGLADESH</small></span
         ></a
       >
@@ -36,7 +35,7 @@ import { ManagedContentService } from '../../features/public/managed-content.ser
         <a routerLink="/gallery">Gallery</a>
         <a routerLink="/faqs">FAQs</a>
         <a routerLink="/contact">Contact</a>
-        <a routerLink="/inquiry" class="btn btn-gold">Plan your event &rarr;</a>
+        <a routerLink="/inquiry" class="btn btn-primary">Plan your event &rarr;</a>
       </nav>
     </header>
     <main id="main"><router-outlet /></main>

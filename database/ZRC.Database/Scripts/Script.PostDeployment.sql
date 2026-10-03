@@ -5,4 +5,5 @@
 :r ./Seed/Permissions.sql
 :r ./Seed/RolePermissions.sql
 :r ./Seed/MenuItems.sql
+:r ./Seed/RetireService.sql
 :r ./Seed/Catalogue.sql

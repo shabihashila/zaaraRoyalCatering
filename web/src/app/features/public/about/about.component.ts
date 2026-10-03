@@ -14,14 +14,14 @@ import { ManagedContentService } from '../managed-content.service';
       <p class="lead" style="white-space:pre-line">
         {{
           content.entry('Page', 'about')?.body ??
-            'Bring people together over the flavours of Bangladesh. Explore 19 carefully organised packages for celebrations, meetings and family gatherings.'
+            'Bring people together over the flavours of Bangladesh. Explore 16 carefully organised packages for celebrations, meetings and family gatherings.'
         }}
       </p>
       <div class="grid grid-3">
         <article class="card reveal">
           <h2>Our story</h2>
           <p class="muted">
-            Weddings, milads, corporate buffets and house parties across Bangladesh — per-head
+            Weddings, corporate buffets and house parties across Bangladesh — per-head
             packages priced transparently in BDT.
           </p>
         </article>
@@ -35,7 +35,7 @@ import { ManagedContentService } from '../managed-content.service';
         <article class="card reveal">
           <h2>Hygiene & team</h2>
           <p class="muted">
-            Trained cooks and waiters, food-safe packing, distribution support for mahfils — and a
+            Trained cooks and waiters, food-safe packing, attentive service — and a
             live chef option for BBQ nights.
           </p>
         </article>
@@ -44,7 +44,7 @@ import { ManagedContentService } from '../managed-content.service';
         <h2>Taste before you book</h2>
         <p>Send a custom inquiry — we will tailor a menu for your guests and budget.</p>
         <p>
-          <a routerLink="/menu" class="btn btn-gold">Browse the menu</a>
+          <a routerLink="/menu" class="btn btn-primary">Browse the menu</a>
           <a routerLink="/contact" class="btn btn-outline">Talk to us</a>
         </p>
       </div>

@@ -27,8 +27,13 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddOpenApi();
 builder.Services.AddHealthChecks();
 builder.Services.AddOutputCache();
+var webOrigins = builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:4200"];
+if (builder.Environment.IsDevelopment())
+{
+    webOrigins = [.. webOrigins, "http://127.0.0.1:4200", "https://127.0.0.1:4200"];
+}
 builder.Services.AddCors(o => o.AddPolicy("web", p => p
-    .WithOrigins(builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:4200"])
+    .WithOrigins(webOrigins)
     .AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
 builder.Services.AddRateLimiter(o =>
 {

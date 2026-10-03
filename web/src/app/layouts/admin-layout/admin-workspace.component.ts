@@ -37,7 +37,7 @@ const IMPLEMENTED = new Set([
     }
     <aside class="admin-sidebar" [class.is-open]="sidebarOpen()">
       <a class="admin-brand" routerLink="/admin"
-        ><img src="/assets/brand/chef-cap.svg" width="38" height="38" alt="" /><span
+        ><span
           >Zaara Royal<small>BUSINESS WORKSPACE</small></span
         ></a
       >

@@ -1,4 +1,3 @@
-import { foodImage, foodSrcSet } from '../food-images';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -20,10 +19,10 @@ import { MotionService } from '../../../core/motion.service';
         <p class="muted" role="status">Loading package…</p>
       } @else if (!pkg()) {
         <div class="card"><h1>Package not found</h1><p class="muted">It may have been renamed — browse the menu.</p>
-        <a routerLink="/menu" class="btn btn-gold">Back to menu</a></div>
+        <a routerLink="/menu" class="btn btn-primary">Back to menu</a></div>
       } @else {
         @let p = pkg()!;
-        <img class="package-banner" [src]="imageFor(p.name, p.heroImageUrl)" [attr.srcset]="imageSrcSet(imageFor(p.name, p.heroImageUrl))" sizes="(max-width: 1200px) 100vw, 1152px" width="1280" height="960" fetchpriority="high" [alt]="p.categoryName + ' food presentation inspiration'" />
+
         <span class="badge">{{ p.categoryName }}</span>
         <h1 class="chef-title">{{ p.name }}</h1>
         @if (p.tagline) { <p class="lead muted">{{ p.tagline }}</p> }
@@ -84,7 +83,7 @@ import { MotionService } from '../../../core/motion.service';
             </dl>
             <p class="muted small">Your estimate includes the selected menu and extras. Our team will confirm availability, delivery and the final quote.</p>
             <p>
-              <a [routerLink]="['/contact']" [queryParams]="{ package: p.slug, guests: guests() }" class="btn btn-gold">Book this package</a>
+              <a [routerLink]="['/contact']" [queryParams]="{ package: p.slug, guests: guests() }" class="btn btn-primary">Book this package</a>
               <a [routerLink]="['/inquiry']" [queryParams]="{ package: p.slug }" class="btn btn-outline">Custom inquiry</a>
             </p>
           </aside>
@@ -108,8 +107,6 @@ export class PackageDetailComponent implements OnInit {
   readonly addOns = signal<QuoteAddOn[]>([]);
 
   readonly bdt = formatBDT;
-  readonly imageFor = foodImage;
-  readonly imageSrcSet = foodSrcSet;
 
   private readonly variantDelta = computed(() => {
     const p = this.pkg();

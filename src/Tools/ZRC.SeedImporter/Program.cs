@@ -86,6 +86,11 @@ using (var wb = new XLWorkbook(workbookPath))
     }
 }
 
+// Only the owner's current service catalogue is eligible for publishing.
+string[] supportedCategories = ["Breakfast", "Lunch", "Dinner", "Corporate Program", "House Party"];
+itemRows.RemoveAll(row => !supportedCategories.Contains(row.Category, StringComparer.Ordinal));
+packageRows.RemoveAll(row => !supportedCategories.Contains(row.Category, StringComparer.Ordinal));
+
 // ---- business rules from the workbook (guideline 2.3), keyed by exact package name ----
 var minGuests = new Dictionary<string, int>(StringComparer.Ordinal) { ["Standard Buffet"] = 40 };
 var taglines = new Dictionary<string, string>(StringComparer.Ordinal)
@@ -96,7 +101,6 @@ var taglines = new Dictionary<string, string>(StringComparer.Ordinal)
 var inclusions = new Dictionary<string, string[]>(StringComparer.Ordinal)
 {
     ["Executive Buffet"] = ["Includes waiter service & cutlery"],
-    ["Full Meal Package"] = ["Includes packaging & distribution support"],
 };
 // Royal Kacchi: Chicken +0 (default) / Mutton +80 per head (workbook note).
 var variants = new Dictionary<string, (string Name, decimal PriceDelta, bool IsDefault)[]>(StringComparer.Ordinal)
@@ -127,7 +131,7 @@ static string Dec(decimal d) => d.ToString("0.00", CultureInfo.InvariantCulture)
 // ---- validation: computed cost must equal the workbook Total Cost ----
 var errors = new List<string>();
 var byPackage = itemRows.GroupBy(x => (x.Category, x.Package)).ToDictionary(g => g.Key, g => g.ToList());
-if (packageRows.Count != 19) errors.Add($"Expected 19 packages, found {packageRows.Count}.");
+if (packageRows.Count != 16) errors.Add($"Expected 16 packages, found {packageRows.Count}.");
 foreach (var p in packageRows)
 {
     if (!byPackage.TryGetValue((p.Category, p.Package), out var items) || items.Count == 0)
@@ -144,9 +148,9 @@ foreach (var p in packageRows)
 var avgSale = packageRows.Count == 0 ? 0 : packageRows.Average(p => p.Sale);
 var avgCost = packageRows.Count == 0 ? 0 : packageRows.Average(p => p.Total);
 var avgProfit = avgSale - avgCost;
-if (Math.Abs(avgSale - 319.47m) > 0.01m) errors.Add($"Avg sale {avgSale:F2} != 319.47.");
-if (Math.Abs(avgCost - 186.84m) > 0.01m) errors.Add($"Avg cost {avgCost:F2} != 186.84.");
-if (Math.Abs(avgProfit - 132.63m) > 0.01m) errors.Add($"Avg profit {avgProfit:F2} != 132.63.");
+if (Math.Abs(avgSale - 336.25m) > 0.01m) errors.Add($"Avg sale {avgSale:F2} != 336.25.");
+if (Math.Abs(avgCost - 196.56m) > 0.01m) errors.Add($"Avg cost {avgCost:F2} != 196.56.");
+if (Math.Abs(avgProfit - 139.69m) > 0.01m) errors.Add($"Avg profit {avgProfit:F2} != 139.69.");
 if (errors.Count > 0)
 {
     Console.Error.WriteLine("SEED VALIDATION FAILED:");

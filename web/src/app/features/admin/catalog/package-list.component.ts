@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { CATALOG_API, MARGIN_THRESHOLD, AdminPackage, toCsv, downloadCsv } from './catalog.models';
 import { AuthService } from '../../../core/auth/auth.service';
 import { formatBDT } from '../../../core/bdt';
-import { foodImage } from '../../public/food-images';
 @Component({
   selector: 'zrc-package-list',
   standalone: true,
@@ -37,7 +36,6 @@ export class PackageListComponent {
   readonly lowMargin = computed(() =>
     this.packages().filter((p) => p.marginPct < MARGIN_THRESHOLD),
   );
-  readonly photo = (name: string) => foodImage(name).replace('.webp', '-small.webp');
   constructor() {
     this.route.queryParamMap.subscribe((q) => this.search.set(q.get('search') ?? ''));
     this.reload();

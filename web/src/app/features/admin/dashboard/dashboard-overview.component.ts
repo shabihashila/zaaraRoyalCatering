@@ -6,7 +6,6 @@ import { HasPermissionDirective } from '../../../core/auth/has-permission.direct
 import { AdminIconComponent } from '../admin-icon.component';
 import { AdminPackage, CATALOG_API, CostingRow, MARGIN_THRESHOLD } from '../catalog/catalog.models';
 import { formatBDT } from '../../../core/bdt';
-import { foodImage } from '../../public/food-images';
 import { API_BASE_URL } from '../../../core/api.config';
 @Component({
   selector: 'zrc-admin-dashboard',
@@ -39,16 +38,11 @@ import { API_BASE_URL } from '../../../core/api.config';
         <a
           *hasPermission="'catalog.package.view'"
           routerLink="/admin/catalog/packages"
-          class="btn btn-gold"
+          class="btn btn-primary"
           >Manage your menu<zrc-admin-icon name="arrow"
         /></a>
       </div>
-      <img
-        src="/assets/food/feast.webp"
-        width="460"
-        height="345"
-        alt="Biryani and accompaniments"
-      />
+      <div class="admin-welcome-mark" aria-hidden="true"><span>ZR</span></div>
     </section>
     @if (auth.hasPermission('catalog.package.view')) {
       <section class="admin-kpis" aria-label="Live catalog summary">
@@ -158,7 +152,7 @@ import { API_BASE_URL } from '../../../core/api.config';
         <div class="admin-package-grid">
           @for (p of featured(); track p.id) {
             <a class="admin-package-tile" [routerLink]="['/admin/catalog/packages', p.id]"
-              ><img [src]="photo(p.name)" width="640" height="480" alt="" loading="lazy" />
+              >
               <div>
                 <small>{{ p.categoryName }}</small>
                 <h3>{{ p.name }}</h3>
@@ -245,7 +239,6 @@ export class AdminDashboardComponent {
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly bdt = formatBDT;
-  readonly photo = (name: string) => foodImage(name).replace('.webp', '-small.webp');
   readonly firstName = computed(() => this.auth.currentUser()?.name.split(' ')[0] ?? 'there');
   readonly activeCount = computed(() => this.packages().filter((p) => p.isActive).length);
   readonly featuredCount = computed(() => this.packages().filter((p) => p.isFeatured).length);

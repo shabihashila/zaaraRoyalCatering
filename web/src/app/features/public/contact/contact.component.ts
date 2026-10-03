@@ -32,7 +32,7 @@ import { API_BASE_URL } from '../../../core/api.config';
             <li>Hours: {{ settings.hours }}</li>
           </ul>
           <p>
-            <a [href]="settings.whatsappHref" target="_blank" rel="noopener" class="btn btn-gold"
+            <a [href]="settings.whatsappHref" target="_blank" rel="noopener" class="btn btn-primary"
               >WhatsApp click-to-chat</a
             >
           </p>

@@ -1,6 +1,7 @@
 import { Injectable, afterNextRender, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_BASE_URL } from '../../core/api.config';
+import { HOME_PACKAGE_IMAGES, imageIdentity } from './food-images';
 import { FAQS, GALLERY, SITE_SETTINGS, TESTIMONIALS } from './site-content';
 export interface ManagedEntry {
   kind: string;
@@ -40,7 +41,9 @@ export class ManagedContentService {
       .map((e) => ({ q: e.title, a: e.body }));
     return [...FAQS.filter((f) => !managed.some((e) => e.q === f.q)), ...managed];
   });
-  readonly gallery = computed(() => [
+  readonly gallery = computed(() => {
+    const seen = new Set(Object.values(HOME_PACKAGE_IMAGES).map(p => imageIdentity(p.image)));
+    return [
     ...GALLERY,
     ...this.entries()
       .filter((e) => e.kind === 'Gallery' && e.imageUrl)
@@ -48,10 +51,16 @@ export class ManagedContentService {
         title: e.title,
         caption: e.body,
         image: e.imageUrl!,
-        gradient: 'linear-gradient(135deg,#0d3b2e,#c9a24b)',
+        gradient: 'var(--zrc-section-gradient)',
         emoji: '',
       })),
-  ]);
+    ].filter(entry => {
+      const key = imageIdentity(entry.image);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  });
   readonly testimonials = computed(() =>
     this.reviews().length
       ? this.reviews().map((r) => ({

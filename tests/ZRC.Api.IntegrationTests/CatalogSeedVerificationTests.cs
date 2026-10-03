@@ -18,13 +18,13 @@ public sealed class CatalogSeedVerificationTests : IClassFixture<WebApplicationF
     }
 
     [Fact]
-    public async Task Seed_has_19_packages_145_links_81_items_6_categories()
+    public async Task Seed_has_16_packages_122_links_76_items_5_categories()
     {
         using var db = Db();
-        Assert.Equal(6, await db.Categories.CountAsync(c => !c.IsDeleted));
-        Assert.Equal(81, await db.Items.CountAsync(i => !i.IsDeleted));
-        Assert.Equal(19, await db.Packages.CountAsync(p => !p.IsDeleted));
-        Assert.Equal(145, await db.PackageItems.CountAsync());
+        Assert.Equal(5, await db.Categories.CountAsync(c => !c.IsDeleted));
+        Assert.Equal(76, await db.Items.CountAsync(i => !i.IsDeleted));
+        Assert.Equal(16, await db.Packages.CountAsync(p => !p.IsDeleted));
+        Assert.Equal(122, await db.PackageItems.CountAsync());
     }
 
     [Fact]
@@ -32,10 +32,10 @@ public sealed class CatalogSeedVerificationTests : IClassFixture<WebApplicationF
     {
         using var db = Db();
         var rows = await db.vw_PackageCostings.AsNoTracking().ToListAsync();
-        Assert.Equal(19, rows.Count);
-        Assert.Equal(319.47m, Math.Round(rows.Average(r => r.SalePricePerHead), 2));
-        Assert.Equal(186.84m, Math.Round(rows.Average(r => r.TotalCost), 2));
-        Assert.Equal(132.63m, Math.Round(rows.Average(r => (r.Profit ?? 0)), 2));
+        Assert.Equal(16, rows.Count);
+        Assert.Equal(336.25m, Math.Round(rows.Average(r => r.SalePricePerHead), 2));
+        Assert.Equal(196.56m, Math.Round(rows.Average(r => r.TotalCost), 2));
+        Assert.Equal(139.69m, Math.Round(rows.Average(r => (r.Profit ?? 0)), 2));
     }
 
     [Fact]

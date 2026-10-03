@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-30T20:25:02.2156371+00:00",
+  "generatedAt": "2026-10-03T20:24:56.3724488+00:00",
   "source": "docs/zaara_royal_catering_menu.xlsx",
-  "packageCount": 19,
-  "itemRowCount": 145,
-  "distinctItemCount": 81,
+  "packageCount": 16,
+  "itemRowCount": 122,
+  "distinctItemCount": 76,
   "averages": {
-    "sale": 319.47,
-    "cost": 186.84,
-    "profit": 132.63
+    "sale": 336.25,
+    "cost": 196.56,
+    "profit": 139.69
   },
   "categories": [
     {
@@ -26,19 +26,14 @@
       "sortOrder": 30
     },
     {
-      "name": "Milad \u0026 Doa Mahfil",
-      "slug": "milad-doa-mahfil",
-      "sortOrder": 40
-    },
-    {
       "name": "Corporate Program",
       "slug": "corporate-program",
-      "sortOrder": 50
+      "sortOrder": 40
     },
     {
       "name": "House Party",
       "slug": "house-party",
-      "sortOrder": 60
+      "sortOrder": 50
     }
   ],
   "packages": [
@@ -479,148 +474,6 @@
         }
       ],
       "inclusions": [],
-      "variants": []
-    },
-    {
-      "category": "Milad \u0026 Doa Mahfil",
-      "name": "Tabarak Package",
-      "slug": "milad-doa-mahfil-tabarak-package",
-      "salePricePerHead": 150,
-      "totalCost": 85,
-      "profit": 65,
-      "marginPct": 0.4333333333333333333333333333,
-      "minGuests": 1,
-      "tagline": null,
-      "workbookNote": null,
-      "items": [
-        {
-          "item": "Sweet Polao / Zarda",
-          "costPerHead": 25
-        },
-        {
-          "item": "Beef",
-          "costPerHead": 45
-        },
-        {
-          "item": "Chickpeas",
-          "costPerHead": 5
-        },
-        {
-          "item": "Dates",
-          "costPerHead": 5
-        },
-        {
-          "item": "Water",
-          "costPerHead": 5
-        }
-      ],
-      "inclusions": [],
-      "variants": []
-    },
-    {
-      "category": "Milad \u0026 Doa Mahfil",
-      "name": "Standard Doa Mahfil",
-      "slug": "milad-doa-mahfil-standard-doa-mahfil",
-      "salePricePerHead": 220,
-      "totalCost": 130,
-      "profit": 90,
-      "marginPct": 0.4090909090909090909090909091,
-      "minGuests": 1,
-      "tagline": null,
-      "workbookNote": null,
-      "items": [
-        {
-          "item": "Rice / Polao",
-          "costPerHead": 20
-        },
-        {
-          "item": "Chicken Curry",
-          "costPerHead": 70
-        },
-        {
-          "item": "Dal",
-          "costPerHead": 10
-        },
-        {
-          "item": "Vegetables",
-          "costPerHead": 10
-        },
-        {
-          "item": "Salad",
-          "costPerHead": 5
-        },
-        {
-          "item": "Pickle",
-          "costPerHead": 5
-        },
-        {
-          "item": "Sweet",
-          "costPerHead": 5
-        },
-        {
-          "item": "Water",
-          "costPerHead": 5
-        }
-      ],
-      "inclusions": [],
-      "variants": []
-    },
-    {
-      "category": "Milad \u0026 Doa Mahfil",
-      "name": "Full Meal Package",
-      "slug": "milad-doa-mahfil-full-meal-package",
-      "salePricePerHead": 320,
-      "totalCost": 190,
-      "profit": 130,
-      "marginPct": 0.40625,
-      "minGuests": 1,
-      "tagline": null,
-      "workbookNote": "Includes packaging \u0026 distribution support",
-      "items": [
-        {
-          "item": "Polao",
-          "costPerHead": 25
-        },
-        {
-          "item": "Chicken Roast",
-          "costPerHead": 55
-        },
-        {
-          "item": "Beef Bhuna",
-          "costPerHead": 60
-        },
-        {
-          "item": "Dal",
-          "costPerHead": 10
-        },
-        {
-          "item": "Vegetables",
-          "costPerHead": 10
-        },
-        {
-          "item": "Salad",
-          "costPerHead": 5
-        },
-        {
-          "item": "Egg",
-          "costPerHead": 10
-        },
-        {
-          "item": "Zarda",
-          "costPerHead": 5
-        },
-        {
-          "item": "Sweet",
-          "costPerHead": 5
-        },
-        {
-          "item": "Water",
-          "costPerHead": 5
-        }
-      ],
-      "inclusions": [
-        "Includes packaging \u0026 distribution support"
-      ],
       "variants": []
     },
     {

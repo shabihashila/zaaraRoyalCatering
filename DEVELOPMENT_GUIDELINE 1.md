@@ -22,7 +22,7 @@ All money is in **Bangladeshi Taka (৳, BDT)**. Package prices are **per head**
 
 | Concept | Meaning |
 |---|---|
-| **Category** | An event/meal type: Breakfast, Lunch, Dinner, Milad & Doa Mahfil, Corporate Program, House Party |
+| **Category** | An event/meal type: Breakfast, Lunch, Dinner, Corporate Program, House Party |
 | **Package** | A named set of items inside one category, sold at a fixed **sale price per head** |
 | **Item** | A dish or component (e.g. *Chicken Roast*, *Borhani*). One item (e.g. *Salad*, *Dal*) can appear in many packages |
 | **Package item cost** | What one item in one package costs per head (৳). The **same item can cost different amounts in different packages** because portion and quality differ (e.g. *Egg Curry* is ৳15 in Premium Breakfast but *Beef Bhuna* is ৳50 in Royal Breakfast and ৳60 in Premium Lunch). So cost belongs to the **package–item link**, not to the item |
@@ -45,9 +45,6 @@ All money is in **Bangladeshi Taka (৳, BDT)**. Package prices are **per head**
 | Dinner | Standard | 280 | 165 | 115 | 41.1% |
 | Dinner | Premium | 400 | 235 | 165 | 41.3% |
 | Dinner | Royal Dinner | 550 | 320 | 230 | 41.8% |
-| Milad & Doa Mahfil | Tabarak Package | 150 | 85 | 65 | 43.3% |
-| Milad & Doa Mahfil | Standard Doa Mahfil | 220 | 130 | 90 | 40.9% |
-| Milad & Doa Mahfil | Full Meal Package | 320 | 190 | 130 | 40.6% |
 | Corporate Program | Snacks / Tea Break Package | 80 | 45 | 35 | 43.8% |
 | Corporate Program | Box Lunch | 220 | 130 | 90 | 40.9% |
 | Corporate Program | Standard Buffet | 380 | 220 | 160 | 42.1% |
@@ -56,9 +53,9 @@ All money is in **Bangladeshi Taka (৳, BDT)**. Package prices are **per head**
 | House Party | Full Dinner Party | 420 | 245 | 175 | 41.7% |
 | House Party | BBQ Night | 650 | 380 | 270 | 41.5% |
 
-Overall averages: sale ৳319.47, cost ৳186.84, profit ৳132.63, margin 41.7%. The admin dashboard must reproduce these numbers from the seeded data. Use them as a seed-verification test.
+Overall averages: sale ৳336.25, cost ৳196.56, profit ৳139.69, margin 41.7%. The admin dashboard must reproduce these numbers from the seeded data. Use them as a seed-verification test.
 
-**Item-level seed data:** the sheet **"Item Cost Detail"** in `zaara_royal_catering_menu.xlsx` has 145 item rows (19 packages) of `Category | Package | Item | Item Cost (৳)`. Do **not** hand-type them. Write a one-time **seed importer** (a console command or seeder class that uses ClosedXML) that reads that sheet and upserts Categories, Packages, Items (deduplicated by normalized name), and PackageItems. Sale prices and notes come from the **"Package Summary"** sheet. After the import, assert that every package's computed cost equals the "Total Cost" column. Fail loudly if any package doesn't match. Database-first twist: the importer **does not write to the database directly**. It reads the Excel, validates the totals, and **generates `database/ZRC.Database/Scripts/Seed/Catalogue.sql`** (idempotent `MERGE` statements), which runs as part of the post-deployment script. It also writes `seed/catalogue.json` for reference. Re-run the importer only when the owner sends an updated workbook, then commit the regenerated SQL.
+**Item-level seed data:** the sheet **"Item Cost Detail"** in `zaara_royal_catering_menu.xlsx` has 122 item rows (16 packages) of `Category | Package | Item | Item Cost (৳)`. Do **not** hand-type them. Write a one-time **seed importer** (a console command or seeder class that uses ClosedXML) that reads that sheet and upserts Categories, Packages, Items (deduplicated by normalized name), and PackageItems. Sale prices and notes come from the **"Package Summary"** sheet. After the import, assert that every package's computed cost equals the "Total Cost" column. Fail loudly if any package doesn't match. Database-first twist: the importer **does not write to the database directly**. It reads the Excel, validates the totals, and **generates `database/ZRC.Database/Scripts/Seed/Catalogue.sql`** (idempotent `MERGE` statements), which runs as part of the post-deployment script. It also writes `seed/catalogue.json` for reference. Re-run the importer only when the owner sends an updated workbook, then commit the regenerated SQL.
 
 Examples of what the importer must produce (for sanity checks):
 - *Classic Breakfast* = Paratha (2 pcs) 20 + Vegetable Bhaji 10 + Scrambled Egg 10 + Chola Dal 10 + Sweet 10 + Black Tea 10 = **৳70**
@@ -72,7 +69,6 @@ Examples of what the importer must produce (for sanity checks):
 | Lunch → Royal Kacchi | "Mutton Kacchi carries an extra ৳80/head" | A **package option/variant** (Chicken = +0, Mutton = +৳80/head) that the customer picks when ordering |
 | Corporate → Standard Buffet | "Minimum 40 guests" | `Package.MinGuests = 40`, enforced in the quote/order validation on both client and server |
 | Corporate → Executive Buffet | "Includes waiter service & cutlery" | A package inclusion note (display only) |
-| Milad → Full Meal Package | "Includes packaging & distribution support" | An inclusion note |
 | Corporate → Snacks / Tea Break | "Ideal for morning or afternoon meeting breaks" | A marketing tagline |
 | House Party → BBQ Night | "Outdoor setup & live chef service available (extra charges apply)" | **Optional add-on services** with an admin-set price (flat or per head) that the customer can add to an order |
 
@@ -333,7 +329,7 @@ POST /api/v1/auth/register | /login | /refresh | /logout
 |---|---|---|
 | **0 – Foundation** | Solution skeleton, modules wiring, SharedKernel, **`ZRC.Database` .sqlproj with all schemas + `deploy.ps1` + `scaffold.ps1`**, scaffolded DbContexts per schema, Serilog, ProblemDetails, OpenAPI/Scalar, docker-compose, Angular workspace from Sparked with admin + public layouts, CI | DACPAC builds and deploys twice to a clean DB with no changes on the second run; scaffold drift check passes; `dotnet build`, `ng build`, and architecture tests pass; an empty admin shell and public shell render |
 | **1 – Identity + RBAC + Dynamic menu** | Identity/nav DDL + post-deploy seed (roles, permissions, menu), startup permission check, JWT + refresh, permission policies, audit log, menu tables + API + Menu Management UI, login screens | SuperAdmin logs in, creates a Kitchen user, and the Kitchen user sees only their menu entries; forbidden API calls return 403 |
-| **2 – Catalog + Excel import** | Catalog DDL, `vw_PackageCosting`, seed importer → `Catalogue.sql`, admin package/item/add-on screens with live margin calc, Costing & Margins sheet + Excel export | Import reproduces all 19 packages; totals match the workbook exactly; averages equal ৳319.47 / ৳186.84 / ৳132.63 / 41.7%; public API never returns cost fields (integration test proves it) |
+| **2 – Catalog + Excel import** | Catalog DDL, `vw_PackageCosting`, seed importer → `Catalogue.sql`, admin package/item/add-on screens with live margin calc, Costing & Margins sheet + Excel export | Import reproduces all 19 packages; totals match the workbook exactly; averages equal ৳336.25 / ৳196.56 / ৳139.69 / 41.7%; public API never returns cost fields (integration test proves it) |
 | **3 – Public website** | Home with 3D hero, packages listing/detail with quote calculator, about, gallery, FAQ, contact, SSR/SEO, animations, reduced-motion + WebGL fallbacks | Lighthouse (mobile) Performance ≥ 85, Accessibility ≥ 95, SEO ≥ 95 on Home and Package detail |
 | **4 – Ordering + Customers** | Registration/login for customers, checkout wizard, orders with snapshots (`ordering.usp_PlaceOrder`), status workflow, admin order management, calendar, kitchen prep sheet, invoices (PDF, QuestPDF) | E2E: customer books Royal Kacchi (Mutton, 60 guests) → total = 60 × (500 + 80) = ৳34,800 plus add-ons; admin confirms; kitchen sees the prep sheet without prices |
 | **5 – Engagement + Content + Reports** | Inquiries, contact, reviews moderation, newsletter, CMS-lite, notifications via outbox, dashboards, manual payments | Staff get inquiry notifications; an approved review shows on Home; dashboard figures match SQL |

@@ -30,7 +30,7 @@ import { AuthService } from '../../../core/auth/auth.service';
     </section>
   `,
   styles: [
-    '.login-wrap form button[type=submit] { font: inherit; font-weight: 700; background: var(--zrc-emerald); color: #fff; border: 0; border-radius: 999px; padding: 0.6rem 1.3rem; cursor: pointer; }',
+    '.login-wrap form button[type=submit] { font: inherit; font-weight: 700; background: var(--zrc-primary-dark); color: #fff; border: 0; border-radius: 999px; padding: 0.6rem 1.3rem; cursor: pointer; }',
   ],
 })
 export class LoginComponent {

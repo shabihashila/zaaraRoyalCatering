@@ -41,8 +41,8 @@ dotnet run --project src/Host/ZRC.Api
 
 ## Phase 2 acceptance (done 2026-10-01)
 
-- [x] Import reproduces all 19 packages; computed totals match the workbook exactly (145 item rows, 81 distinct items)
-- [x] Averages equal ৳319.47 / ৳186.84 / ৳132.63 / ~41.7% (importer asserts + `CatalogSeedVerificationTests`)
+- [x] Import reproduces all 16 packages; computed totals match the workbook exactly (122 item rows, 76 distinct items)
+- [x] Averages equal ৳336.25 / ৳196.56 / ৳139.69 / ~41.7% (importer asserts + `CatalogSeedVerificationTests`)
 - [x] Public API never returns cost fields (snapshot test on package detail JSON)
 - [x] Admin package/item screens with live margin calc, Costing & Margins sheet + CSV export (`/admin/catalog/packages`, `/admin/catalog/costing`)
 - [x] DACPAC deployed twice cleanly; catalog context re-scaffolded with no drift
@@ -52,7 +52,7 @@ dotnet run --project src/Host/ZRC.Api
 - [x] Home with lazy 3D hero (procedural handi, poster + reduced-motion/WebGL fallbacks, outside Angular zone)
 - [x] Menu (`/menu`: category/guests/budget filters, 3D flip cards, 2–3 compare) + detail (`/packages/:slug`: variants incl. Mutton +৳80, add-ons, live quote with MinGuests enforcement)
 - [x] About / Gallery (masonry + lightbox) / FAQs / Contact (BD phone validation, WhatsApp) / Inquiry (wedding/500+ guests)
-- [x] SSR/SEO: 7 prerendered routes + SSR package detail, per-page meta/OG/canonical, FoodEstablishment + Offer JSON-LD, robots.txt + sitemap.xml (19 packages)
+- [x] SSR/SEO: 7 prerendered routes + SSR package detail, per-page meta/OG/canonical, FoodEstablishment + Offer JSON-LD, robots.txt + sitemap.xml (16 packages)
 - [x] No costs in public API/pages (prerendered HTML verified); `ng build` green (initial ~416 kB raw), vitest 8/8
 
 ## Phase 0 acceptance
@@ -69,10 +69,14 @@ Premium food-led public website with responsive photo cards, mobile navigation, 
 
 ## Admin workspace upgrade (2026-10-03)
 
-Responsive emerald/gold workspace with a live catalog dashboard, package filters, category/item/add-on editors, costing, staff access and audit history. Admin screens load on demand. JWT profile lookup and private-route reload issues are fixed. See [the initial workspace upgrade](docs/ADMIN-UPGRADE.md).
+Responsive red and warm-neutral workspace with a live catalog dashboard, package filters, category/item/add-on editors, costing, staff access and audit history. Admin screens load on demand. JWT profile lookup and private-route reload issues are fixed. See [the initial workspace upgrade](docs/ADMIN-UPGRADE.md).
 
 ## Planned menu completion (2026-10-03)
 
 Admin add/edit actions now open focused, responsive modals with Cancel/Close, Escape dismissal and visible save errors, including catalog/package editors, customers, bookings, payments/status, content/reviews/inbox, staff and navigation.
 
 Orders, booking calendars, kitchen preparation, customers, reviews, contact/inquiry inbox, website content and reporting now have database-backed workflows. Quotes are calculated by the server; bookings retain price snapshots; payments and status changes are audited. Kitchen responses contain no financial amounts. Public contact and inquiry forms now persist requests, and published content appears on the customer website. See [file-by-file changes, API routes, setup and verification](docs/PLANNED-MENUS.md). No new application dependencies; deploy the additive DACPAC before starting the updated API.
+
+## Brand refresh (2026-10-04)
+
+The public website and staff workspace share royal-red theme tokens. The existing serving handi is the main homepage hero visual, with lazy WebGL loading and a static reduced-motion fallback. Photos have explicit content ownership, and the catalogue now contains 16 packages across five categories. The cleaned source workbook, regenerated SQL/JSON and deployed local database agree. See [changes, image ownership and validation](docs/BRAND-REFRESH.md). The official logo attachment is still required to replace the temporary text wordmark.

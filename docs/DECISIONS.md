@@ -76,3 +76,12 @@
 - Move catalog, package details/costs, bulk pricing, customer, booking, status/payment, review/content/inbox, staff and navigation add/edit forms into one native-dialog component. Keep API routes and save payloads intact.
 - Native dialogs isolate background controls and trap focus; explicitly restore focus to the opener. Prevent Escape/Close while saving, retain errors in the dialog and constrain dimensions for mobile scrolling.
 - Exclude build outputs, local configuration, environment files and temporary conversion scripts from Git. Remove local account passwords from repository documentation before publishing to the user-specified GitHub repository.
+
+## 2026-10-04 — Brand refresh and catalogue cleanup
+
+- Shared semantic red theme tokens replace the independent customer and admin green palettes. The supplied reference colors are used provisionally because no official logo attachment or repository asset was available.
+- The existing Three.js handi implementation moves into the main hero. Warm metal, deep-red enamel and limited brass details use environment reflections and soft shadows; motion is bounded and pauses when hidden. Reduced-motion and unsupported devices retain a static SVG vessel. No dependencies were added.
+- Local photographs have explicit owners: three homepage signature cards and four gallery entries. Package/category listings and admin screens use typography rather than repeated or unrelated photographs. Managed gallery URLs are deduplicated against reserved and gallery images.
+- The retired service is removed from the source workbook, fallback catalogue, form options, sitemap and generated seed. An idempotent post-deployment cleanup identifies its legacy category using a stable fingerprint, removes its packages and orphaned links/items, and refuses to erase historical bookings. No local bookings existed and the cleanup was deployed.
+- Current catalogue: 5 categories, 16 packages, 122 item links, 76 items; mean sale 336.25, cost 196.56, profit 139.69 BDT. No schema or generated EF changes were required.
+- Development CORS explicitly permits 127.0.0.1:4200; other environments retain their configured origin allowlist.

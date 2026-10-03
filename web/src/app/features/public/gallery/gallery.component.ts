@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, inject, signal } from '@angular/core';
 import { SeoService } from '../../../core/seo.service';
 import { foodSrcSet } from '../food-images';
-import { GALLERY } from '../site-content';
 import { ManagedContentService } from '../managed-content.service';
 
 @Component({

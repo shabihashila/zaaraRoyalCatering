@@ -24,7 +24,6 @@ import { API_BASE_URL } from '../../../core/api.config';
           >Event type
           <select formControlName="eventType">
             <option value="Wedding">Wedding</option>
-            <option value="Milad / Doa Mahfil">Milad / Doa Mahfil</option>
             <option value="Corporate">Corporate</option>
             <option value="House Party">House Party</option>
             <option value="Other">Other large event</option>
