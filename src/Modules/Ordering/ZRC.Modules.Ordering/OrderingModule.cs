@@ -1,3 +1,4 @@
+using ZRC.Infrastructure.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -13,7 +14,7 @@ namespace ZRC.Modules.Ordering;
 public sealed class OrderingModule : IModule
 {
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
-        => services.AddDbContext<OrderingDbContext>(o=>o.UseSqlServer(configuration.GetConnectionString("Default")));
+        => services.AddDbContext<OrderingDbContext>(o => DatabaseProvider.Configure(o, configuration));
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
         OrderEndpoints.Map(endpoints);

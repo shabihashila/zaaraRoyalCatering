@@ -11,6 +11,8 @@ public static class OperationsAudit
     {
         var beforeJson = before is null ? null : JsonSerializer.Serialize(before);
         var afterJson = after is null ? null : JsonSerializer.Serialize(after);
+        if (db.Database.IsNpgsql())
+            return db.Database.ExecuteSqlInterpolatedAsync($"INSERT INTO \"identity\".\"AuditLogs\" (\"UserId\",\"Action\",\"EntityType\",\"EntityId\",\"BeforeJson\",\"AfterJson\") VALUES ({actor},{action},{entity},{id},{beforeJson},{afterJson})", ct);
         return db.Database.ExecuteSqlInterpolatedAsync($"INSERT INTO [identity].[AuditLogs] ([UserId],[Action],[EntityType],[EntityId],[BeforeJson],[AfterJson]) VALUES ({actor},{action},{entity},{id},{beforeJson},{afterJson})", ct);
     }
 }

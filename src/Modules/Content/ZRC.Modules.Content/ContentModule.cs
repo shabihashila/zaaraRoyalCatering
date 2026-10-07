@@ -1,3 +1,4 @@
+using ZRC.Infrastructure.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -12,7 +13,7 @@ namespace ZRC.Modules.Content;
 public sealed class ContentModule : IModule
 {
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
-        =>services.AddDbContext<ContentDbContext>(o=>o.UseSqlServer(configuration.GetConnectionString("Default")));
+        =>services.AddDbContext<ContentDbContext>(o => DatabaseProvider.Configure(o, configuration));
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
         ContentEndpoints.Map(endpoints);

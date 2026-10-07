@@ -1,3 +1,4 @@
+using ZRC.Infrastructure.Common;
 using FluentValidation;
 using Identity.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -20,10 +21,8 @@ public sealed class IdentityModule : IModule
 {
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {
-        var cs = configuration.GetConnectionString("Default")
-            ?? throw new InvalidOperationException("ConnectionStrings:Default missing.");
-        services.AddDbContext<AppIdentityDbContext>(o => o.UseSqlServer(cs));
-        services.AddDbContext<IdentityDbContext>(o => o.UseSqlServer(cs));
+        services.AddDbContext<AppIdentityDbContext>(o => DatabaseProvider.Configure(o, configuration));
+        services.AddDbContext<IdentityDbContext>(o => DatabaseProvider.Configure(o, configuration));
         services.AddSingleton(JwtOptions.FromConfig(configuration));
         services.AddScoped<TokenService>();
         services.AddScoped<AuditWriter>();

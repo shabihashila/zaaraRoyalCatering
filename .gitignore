@@ -13,6 +13,7 @@ appsettings.Development.json
 *.pfx
 .env
 .env.*
+docs/render_postgress_creds.txt
 !.env.example
 *.log
 modal-upgrade.py

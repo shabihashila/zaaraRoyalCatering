@@ -1,3 +1,4 @@
+using ZRC.Infrastructure.Common;
 using Catalog.Infrastructure.Persistence;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -17,9 +18,7 @@ public sealed class CatalogModule : IModule
 {
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {
-        var cs = configuration.GetConnectionString("Default")
-            ?? throw new InvalidOperationException("ConnectionStrings:Default missing.");
-        services.AddDbContext<CatalogDbContext>(o => o.UseSqlServer(cs));
+        services.AddDbContext<CatalogDbContext>(o => DatabaseProvider.Configure(o, configuration));
         services.AddScoped<CatalogQuery>();
         services.AddScoped<ICatalogQuery, CatalogQuery>();
         services.AddValidatorsFromAssemblyContaining<UpdatePackageValidator>();

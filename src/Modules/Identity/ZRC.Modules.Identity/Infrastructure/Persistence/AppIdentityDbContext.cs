@@ -36,5 +36,6 @@ public sealed class AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> 
         b.Entity<IdentityUserLogin<string>>(e => e.ToTable("UserLogins", "identity"));
         b.Entity<IdentityUserToken<string>>(e => e.ToTable("UserTokens", "identity"));
         b.Entity<IdentityRoleClaim<string>>(e => e.ToTable("RoleClaims", "identity"));
+        ZRC.Infrastructure.Common.DatabaseProvider.AdaptPostgres(b, this);
     }
 }

@@ -80,3 +80,7 @@ Orders, booking calendars, kitchen preparation, customers, reviews, contact/inqu
 ## Brand refresh (2026-10-04)
 
 The public website and staff workspace share royal-red theme tokens. The existing serving handi is the main homepage hero visual, with lazy WebGL loading and a static reduced-motion fallback. Photos have explicit content ownership, and the catalogue now contains 16 packages across five categories. The cleaned source workbook, regenerated SQL/JSON and deployed local database agree. See [changes, image ownership and validation](docs/BRAND-REFRESH.md). The official logo attachment is still required to replace the temporary text wordmark.
+
+## PostgreSQL and Render (2026-10-08)
+
+SQL Server remains the default. PostgreSQL is selectable with Database__Provider=PostgreSQL and DATABASE_URL. The supplied Render database is initialized with schema, permissions, navigation and the full current catalogue. The root Dockerfile and render.yaml build and serve the frontend and API together. See [Render setup and verification](docs/RENDER.md). Secrets stay in environment variables and ignored local files.

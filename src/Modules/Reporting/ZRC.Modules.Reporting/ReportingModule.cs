@@ -1,3 +1,4 @@
+using ZRC.Infrastructure.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -12,7 +13,7 @@ namespace ZRC.Modules.Reporting;
 public sealed class ReportingModule : IModule
 {
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
-        =>services.AddDbContext<ReportingDbContext>(o=>o.UseSqlServer(configuration.GetConnectionString("Default")));
+        =>services.AddDbContext<ReportingDbContext>(o => DatabaseProvider.Configure(o, configuration));
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
         ReportEndpoints.Map(endpoints);

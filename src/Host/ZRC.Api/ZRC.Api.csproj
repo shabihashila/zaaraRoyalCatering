@@ -29,4 +29,8 @@
     <ProjectReference Include="..\..\Modules\Identity\ZRC.Modules.Identity.Contracts\ZRC.Modules.Identity.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="../../../database/postgresql/001_initial.sql" LogicalName="ZRC.PostgreSQL.001_initial.sql" />
+    <EmbeddedResource Include="../../../database/postgresql/002_role_normalization.sql" LogicalName="ZRC.PostgreSQL.002_role_normalization.sql" />
+  </ItemGroup>
 </Project>

@@ -44,6 +44,18 @@
             }
           },
           "configurations": {
+            "render": {
+              "outputMode": "static",
+              "ssr": false,
+              "prerender": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/app/core/api.config.ts",
+                  "with": "src/app/core/api.config.render.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "production": {
               "budgets": [
                 {

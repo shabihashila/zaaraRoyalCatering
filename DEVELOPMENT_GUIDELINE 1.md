@@ -373,3 +373,7 @@ Before you write code, reply with:
 5. The Phase 0 task list.
 
 Then start Phase 0.
+
+## PostgreSQL deployment addendum (2026-10-08)
+
+The owner authorized PostgreSQL alongside MS SQL for Render. SQL Server remains the default and retains the DACPAC workflow. PostgreSQL uses explicit versioned SQL in database/postgresql, with generated initial DDL/seeds and provider-specific context partials. Do not use EF migrations or EnsureCreated. Secrets belong in environment variables or ignored local files. See docs/RENDER.md for hosting and future upgrades.

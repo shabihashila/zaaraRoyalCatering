@@ -1,3 +1,4 @@
+using ZRC.Infrastructure.Common;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,9 +17,7 @@ public sealed class NavigationModule : IModule
 {
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {
-        var cs = configuration.GetConnectionString("Default")
-            ?? throw new InvalidOperationException("ConnectionStrings:Default missing.");
-        services.AddDbContext<NavigationDbContext>(o => o.UseSqlServer(cs));
+        services.AddDbContext<NavigationDbContext>(o => DatabaseProvider.Configure(o, configuration));
         services.AddScoped<MenuService>();
         services.AddValidatorsFromAssemblyContaining<UpsertMenuValidator>();
     }

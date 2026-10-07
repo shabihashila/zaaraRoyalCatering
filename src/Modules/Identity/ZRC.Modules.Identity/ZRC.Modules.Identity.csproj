@@ -22,4 +22,5 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+<ItemGroup><ProjectReference Include="../../../BuildingBlocks/ZRC.Infrastructure.Common/ZRC.Infrastructure.Common.csproj" /></ItemGroup>
 </Project>

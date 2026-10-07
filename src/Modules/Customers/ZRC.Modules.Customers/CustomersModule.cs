@@ -1,3 +1,4 @@
+using ZRC.Infrastructure.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -14,7 +15,7 @@ public sealed class CustomersModule : IModule
 {
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<CustomersDbContext>(o=>o.UseSqlServer(configuration.GetConnectionString("Default")));
+        services.AddDbContext<CustomersDbContext>(o => DatabaseProvider.Configure(o, configuration));
         services.AddScoped<ICustomerQuery,CustomerQuery>();
     }
     public void MapEndpoints(IEndpointRouteBuilder endpoints)
